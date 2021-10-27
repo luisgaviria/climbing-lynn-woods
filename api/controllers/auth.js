@@ -97,6 +97,55 @@ module.exports.loginUser = async (req, res, next) => {
 };
 
 module.exports.loginUserViaGoogle = async (req, res, next) => {
-  console.log(req.user);
-  return res.send("Logged");
+  // console.log(req.user);
+
+  let user = await User.findOne({
+    username: req.user.displayName,
+    email: req.user.emails[0].value,
+  });
+
+  if (user) {
+    const token = await jwt.sign(
+      {
+        id: user._id.toString(),
+      },
+      process.env.JWT_SECRET,
+      {}
+    );
+
+    return res.redirect(
+      process.env.FRONTEND_URL + "/googleauth?token=" + token
+    );
+
+    // return res.status(200).json({
+    //   token: token,
+    //   message: "Succesfully logged as a google account",
+    // });
+  } else {
+    // if we haven't got user in database
+    user = await User.create({
+      username: req.user.displayName,
+      email: req.user.emails[0].value,
+      password: "Google",
+    });
+    const token = await jwt.sign(
+      {
+        id: user._id.toString(),
+      },
+      process.env.JWT_SECRET,
+      {}
+    );
+    await user.save();
+
+    return res.redirect(
+      process.env.FRONTEND_URL + "/googleauth?token=" + token
+    );
+    // return res.status(201).json({
+    //   user: user, // i think this is not secure for now change it later
+    //   message: "Succesfully logged as a google account",
+    //   token: token,
+    // });
+  }
+
+  // return res.send("Logged");
 };

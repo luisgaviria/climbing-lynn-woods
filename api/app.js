@@ -46,19 +46,16 @@ app.use((error, req, res, next) => {
   // console.log(error);
   console.log(error);
   // console.log(error.message.toString());
-  // return res.status(error.statusCode).json({
-  //   message: error.message,
-  // });
+  return res.status(error.statusCode).json({
+    message: error.message,
+  });
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://lynnwoods:notlynnwoods@cluster0.r7wpv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(async (result) => {
     console.log("Succesfully connected");
 
