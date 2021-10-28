@@ -26,7 +26,7 @@ module.exports.registerUser = async (req, res, next) => {
     const error = new Error();
     error.message = "Account already exists";
     error.statusCode = 403;
-    next(error);
+    return next(error);
   }
 
   const hashed_password = bcrypt.hashSync(body.password, 12);
@@ -39,7 +39,7 @@ module.exports.registerUser = async (req, res, next) => {
   );
   await user.save();
 
-  res.status(201).json({
+  return res.status(201).json({
     user: user,
     message: "Succesfully created account",
     token: token,

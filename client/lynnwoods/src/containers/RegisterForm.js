@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { url } from "../url";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const RegisterForm = (props) => {
@@ -7,7 +8,10 @@ const RegisterForm = (props) => {
     username: "",
     email: "",
     password: "",
+    error: false,
   });
+
+  const history = useHistory();
 
   const onChangeInput = (event) => {
     setState((prevState) => {
@@ -19,21 +23,33 @@ const RegisterForm = (props) => {
   };
 
   const onClickSignIn = async () => {
-    console.log(url);
-    const response = await axios.post(
-      `${url}/auth/register`,
-      {
-        username: state.username,
-        email: state.email,
-        password: state.password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+    // console.log(url);
+    try {
+      const response = await axios.post(
+        `${url}/auth/register`,
+        {
+          username: state.username,
+          email: state.email,
+          password: state.password,
         },
-      }
-    );
-    console.log(response);
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // console.log(response);
+      localStorage.setItem("token", response.data.token);
+      history.push("/rocks");
+    } catch (err) {
+      console.log(err);
+      return setState((prevState) => {
+        return {
+          ...prevState,
+          error: true,
+        };
+      });
+    }
   };
   return (
     <div>
@@ -63,6 +79,13 @@ const RegisterForm = (props) => {
         />
       </div>
       <button onClick={onClickSignIn}>Sign In</button>
+      {state.error ? (
+        <>
+          <p style={{ color: "red" }}>
+            Account Username or Email is already taken
+          </p>
+        </>
+      ) : null}
     </div>
   );
 };

@@ -8,6 +8,7 @@ const LandingPage = (props) => {
   const [state, setState] = useState({
     login: "",
     password: "",
+    error: false,
   });
   const history = useHistory();
   const onClickRegister = () => {
@@ -22,19 +23,29 @@ const LandingPage = (props) => {
     });
   };
   const onClickLogin = async () => {
-    const response = await axios.post(
-      url + "/auth/login",
-      {
-        login: state.login,
-        password: state.password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      const response = await axios.post(
+        url + "/auth/login",
+        {
+          login: state.login,
+          password: state.password,
         },
-      }
-    );
-    console.log(response);
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      localStorage.setItem("token", response.data.token);
+      history.push("/rocks");
+    } catch (err) {
+      return setState((prevState) => {
+        return {
+          ...prevState,
+          error: true,
+        };
+      });
+    }
   };
   return (
     <div style={{ margin: "auto", width: "500px", marginTop: "200px" }}>
@@ -58,6 +69,11 @@ const LandingPage = (props) => {
       <button style={{ margin: "auto" }} onClick={onClickLogin}>
         Login
       </button>
+      {state.error ? (
+        <>
+          <p style={{ color: "red" }}>Wrong Password or Login</p>
+        </>
+      ) : null}
       <GoogleAuthButton />
       <button style={{ margin: "auto" }} onClick={onClickRegister}>
         Register
