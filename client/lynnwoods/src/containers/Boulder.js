@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../url";
+import PathTile from "../components/PathTile";
 
 const Boulder = (props) => {
   const [state, setState] = useState({
@@ -29,13 +30,7 @@ const Boulder = (props) => {
       <h1 style={{ textAlign: "center" }}>{props.match.params.boulder}</h1>
       <div style={{ textAlign: "center" }}>
         {state.paths.map((path) => {
-          return (
-            <div>
-              <h2>{path.route}</h2>
-              <p>Rating: {path.rating}</p>
-              <p>Stars: {path.avgStars}</p>
-            </div>
-          );
+          return <PathTile path={path} />;
         })}
       </div>
     </>

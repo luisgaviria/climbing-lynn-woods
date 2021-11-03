@@ -5,6 +5,7 @@ import GoogleAuth from "./containers/GoogleAuth";
 import RegisterForm from "./containers/RegisterForm";
 import Rocks from "./containers/Rocks";
 import Boulder from "./containers/Boulder";
+import Path from "./containers/Path";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/register" exact component={RegisterForm} />
         <Route path="/rocks" exact component={Rocks} />
         <Route path="/rocks/:boulder" exact component={Boulder} />
+        <Route path="/path/:path" exact component={Path} />
       </Switch>
     </BrowserRouter>
   );

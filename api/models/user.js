@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  completed_boulders: {
+    type: Array,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

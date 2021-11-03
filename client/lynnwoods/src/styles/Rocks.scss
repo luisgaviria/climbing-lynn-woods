@@ -1,6 +1,16 @@
 .rocks-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+  // display: grid;
+  // grid-template-columns: repeat(3, 1fr);
+  // grid-gap: 10px;
+  // grid-auto-rows: minmax(100px, auto);
+  // align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.area {
+  flex: 1 1 170px; /*  Stretching: */
+  flex: 0 1 170px; /*  No stretching: */
+  margin: 20px;
 }

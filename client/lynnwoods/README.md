@@ -5,4 +5,4 @@ in areas we have boulders.
 in boulders we have climbs.
 each climb has a value.
 App should add all of the values.
-applying route competitor can climb and other needs to be a witness... Witness has to be competitor. He needs to confirm.
+applying route competitor can climb and other needs to be a witness... Witness has to be competitor. He needs to confirm.=> sending a request to be a witness.

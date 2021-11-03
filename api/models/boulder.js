@@ -36,6 +36,18 @@ const boulderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  photos: {
+    type: Array,
+    required: false,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  FA: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model("Boulder", boulderSchema);

@@ -10,4 +10,8 @@ router.get("/rocks", isAuth, boulderController.getAreasAndBoulders);
 
 router.get("/rocks/:boulder", isAuth, boulderController.getBoulderAndPaths);
 
+router.get("/path/:path", isAuth, boulderController.getPath);
+
+router.post("/path/:path_id/finish", isAuth, boulderController.completeBoulder);
+
 module.exports = router;
