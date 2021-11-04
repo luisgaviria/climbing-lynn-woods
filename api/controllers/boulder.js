@@ -1,5 +1,6 @@
 const Boulder = require("../models/boulder");
 const User = require("../models/user");
+const CompletedBoulder = require("../models/completed_boulders");
 const fs = require("fs");
 const csv = require("csv-parser");
 const axios = require("axios");
@@ -121,33 +122,96 @@ module.exports.getPath = async (req, res, next) => {
 
   const boulder_path = await Boulder.findOne({ route: path });
 
+  const submissions = await CompletedBoulder.find({
+    boulder: boulder_path._id,
+    witness: null,
+  })
+    .populate("climber", "username")
+    .populate("boulder");
+
   return res.status(200).json({
     message: `Succesfully got ${path}`,
     path: boulder_path,
+    submissions: submissions,
   });
 };
 
 module.exports.completeBoulder = async (req, res, next) => {
   const userId = req.userId;
+  const witnessId = req.body.witnessId;
   const path_id = req.params.path_id;
 
-  const path = await Boulder.findOne({ _id: path_id.toString() });
-  const user = await User.findOne({ _id: userId });
-
-  user.completed_boulders.map((boulder) => {
-    if (boulder._id == path_id) {
-      const error = new Error();
-      error.message = "You already did that boulder";
-      error.statusCode = 403;
-      return next(error);
-    }
+  let completed_boulder = await CompletedBoulder.findOne({
+    climber: userId,
+    boulder: path_id,
   });
 
-  user.completed_boulders.push({ _id: path._id, points: path.points });
+  if (completed_boulder) {
+    const error = new Error();
+    error.message = "You already done this boulder";
+    error.statusCode = 403;
+    return next(error);
+  }
 
-  await user.save();
+  const witness = await User.findOne({
+    _id: witnessId,
+  });
+
+  completed_boulder = await CompletedBoulder.create({
+    climber: userId,
+    witness: null,
+    boulder: path_id,
+  });
+
+  witness.requests.push(completed_boulder._id.toString());
+
+  await witness.save();
+
+  await completed_boulder.save();
 
   return res.status(200).json({
-    message: `You Succesfully finished ${path.route}`,
+    message: "Created submission to confirm by witness",
   });
+};
+
+module.exports.confirmSubmission = async (req, res, next) => {
+  const userId = req.userId;
+  const submissionId = req.params.submissionId;
+
+  const completed_boulder = await CompletedBoulder.findOne({
+    _id: submissionId,
+  });
+
+  if (!completed_boulder) {
+    const error = new Error();
+    error.message = "We can't find submission";
+    error.statusCode = 404;
+    return next(error);
+  }
+  if (completed_boulder.witness != null) {
+    const error = new Error();
+    error.message = "This submission have witness";
+    error.statusCode = 403;
+    return next(error);
+  }
+  if (completed_boulder.climber == userId) {
+    const error = new Error();
+    error.message = "You can't be witness for your submission";
+    error.statusCode = 403;
+    return next(error);
+  }
+
+  completed_boulder.witness = userId;
+  await completed_boulder.save();
+
+  return res.status(200).json({
+    message: "Succesfully confirmed submission",
+  });
+};
+
+module.exports.getRequests = async (req, res, next) => {
+  const userId = req.userId;
+  const user = await User.findOne({ _id: userId }).populate("requests");
+
+  console.log(user);
 };

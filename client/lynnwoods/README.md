@@ -1,8 +1,6 @@
 #TO DO
-Error handling in login and register page
-After login we should add rocks page and user have ability to find areas
-in areas we have boulders.
-in boulders we have climbs.
-each climb has a value.
-App should add all of the values.
-applying route competitor can climb and other needs to be a witness... Witness has to be competitor. He needs to confirm.=> sending a request to be a witness.
+
+Handling errors on frontend with submiting requests to witness.
+react select to do cool dropdown
+map-> displaying location on the map with longtitude and latitude
+User Requests page where he can accept or deny requests.

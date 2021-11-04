@@ -14,4 +14,12 @@ router.get("/path/:path", isAuth, boulderController.getPath);
 
 router.post("/path/:path_id/finish", isAuth, boulderController.completeBoulder);
 
+router.post(
+  "/submission/:submissionId/accept",
+  isAuth,
+  boulderController.confirmSubmission
+);
+
+router.get("/requests", isAuth, boulderController.getRequests);
+
 module.exports = router;
