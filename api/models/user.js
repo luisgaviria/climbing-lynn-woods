@@ -13,11 +13,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  requests: {
-    type: Array,
-    required: true,
-    ref: "CompletedBoulders",
-  },
 });
 
 module.exports = mongoose.model("User", userSchema);

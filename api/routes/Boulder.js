@@ -22,4 +22,16 @@ router.post(
 
 router.get("/requests", isAuth, boulderController.getRequests);
 
+router.patch(
+  "/request/:completedBoulderId",
+  isAuth,
+  boulderController.acceptRequest
+);
+
+router.delete(
+  "/request/:completedBoulderId",
+  isAuth,
+  boulderController.denyRequest
+);
+
 module.exports = router;

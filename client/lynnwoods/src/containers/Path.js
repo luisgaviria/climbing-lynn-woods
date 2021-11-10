@@ -8,6 +8,7 @@ const Path = (props) => {
     users: [],
     choosen_user: null,
     completion_input: false,
+    message: null,
   });
   useEffect(async () => {
     const response = await axios.get(url + "/path/" + props.match.params.path, {
@@ -66,20 +67,33 @@ const Path = (props) => {
   };
 
   const onClickSubmit = async (req, res, next) => {
-    const response = await axios.post(
-      url + "/path/" + state._id.toString() + "/finish",
-      {
-        witnessId: state.choosen_user._id.toString(),
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
+    try {
+      const response = await axios.post(
+        url + "/path/" + state._id.toString() + "/finish",
+        {
+          witnessId: state.choosen_user?._id.toString(),
         },
-      }
-    );
-    // for now just submit no special effects
-    console.log(response.data);
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      setState((prevState) => {
+        return {
+          ...prevState,
+          message: { data: response.data.message, color: "green" },
+        };
+      });
+    } catch (error) {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          message: { data: error.response.data.message, color: "red" },
+        };
+      });
+    }
   };
 
   return (
@@ -135,6 +149,9 @@ const Path = (props) => {
               );
             })}
             <button onClick={onClickSubmit}>Submit</button>
+            {state.message ? (
+              <p style={{ color: state.message.color }}>{state.message.data}</p>
+            ) : null}
           </div>
         ) : null}
       </div>

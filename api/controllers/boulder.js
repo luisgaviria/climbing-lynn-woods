@@ -146,26 +146,41 @@ module.exports.completeBoulder = async (req, res, next) => {
     boulder: path_id,
   });
 
-  if (completed_boulder) {
-    const error = new Error();
-    error.message = "You already done this boulder";
-    error.statusCode = 403;
-    return next(error);
-  }
-
   const witness = await User.findOne({
     _id: witnessId,
   });
 
+  if (!witness) {
+    const error = new Error();
+    error.message = "Witness does not exist";
+    error.statusCode = 404;
+    return next(error);
+  }
+
+  if (completed_boulder) {
+    const witnesses = completed_boulder.witnesses;
+    for (const witness_temp of witnesses) {
+      if (witness_temp.witness.toString() == witness._id.toString()) {
+        const error = new Error();
+        error.message = "You already requested this witness";
+        error.statusCode = 403;
+        return next(error);
+      }
+    }
+    completed_boulder.witnesses.push({ accepted: false, witness: witness._id });
+
+    await completed_boulder.save();
+
+    return res.status(200).json({
+      message: "Succesfully requested new witness",
+    });
+  }
+
   completed_boulder = await CompletedBoulder.create({
     climber: userId,
-    witness: null,
+    witnesses: { accepted: false, witness: witness._id },
     boulder: path_id,
   });
-
-  witness.requests.push(completed_boulder._id.toString());
-
-  await witness.save();
 
   await completed_boulder.save();
 
@@ -211,7 +226,80 @@ module.exports.confirmSubmission = async (req, res, next) => {
 
 module.exports.getRequests = async (req, res, next) => {
   const userId = req.userId;
-  const user = await User.findOne({ _id: userId }).populate("requests");
+  const completed_boulders = await CompletedBoulder.find()
+    .populate("boulder")
+    .populate("climber", "username");
 
-  console.log(user);
+  const data = [];
+
+  for (const completed_boulder of completed_boulders) {
+    completed_boulder.witnesses.map((witness) => {
+      if (witness.witness == userId && !witness.accepted) {
+        data.push({ ...completed_boulder._doc });
+      }
+    });
+  }
+
+  return res.status(200).json({
+    requests: data,
+  });
+};
+
+module.exports.acceptRequest = async (req, res, next) => {
+  const userId = req.userId;
+  const completedBoulderId = req.params.completedBoulderId;
+
+  const completed_boulder = await CompletedBoulder.findOne({
+    _id: completedBoulderId,
+  });
+
+  let temp_index = null;
+
+  for (const [index, witness] of completed_boulder.witnesses.entries()) {
+    if (witness.witness == userId && !witness.accepted) {
+      temp_index = index;
+    }
+  }
+  // console.log(temp_index);
+
+  completed_boulder.witnesses[temp_index].accepted = true;
+  const witnesses = completed_boulder.witnesses[temp_index];
+
+  await CompletedBoulder.updateOne(
+    {
+      _id: completed_boulder._id,
+    },
+    {
+      witnesses: witnesses,
+    }
+  );
+
+  return this.getRequests(req, res, next);
+  // return res.status(200).json({
+  //   message: "Succesfully accepted request",
+  // });
+};
+
+module.exports.denyRequest = async (req, res, next) => {
+  const userId = req.userId;
+  const completedBoulderId = req.params.completedBoulderId;
+
+  const completed_boulder = await CompletedBoulder.findOne({
+    _id: completedBoulderId,
+  });
+  let temp_index = null;
+
+  for (const [index, witness] of completed_boulder.witnesses.entries()) {
+    if (witness.witness == userId && !witness.accepted) {
+      temp_index = index;
+    }
+  }
+  completed_boulder.witnesses.splice(temp_index, 1);
+  await completed_boulder.save();
+
+  return this.getRequests(req, res, next);
+  // return res.status(200).json({
+  //   message: "Succesfully denied request",
+  // });
+  // const witnesses = completed_boulder.witnesses[temp_index];
 };

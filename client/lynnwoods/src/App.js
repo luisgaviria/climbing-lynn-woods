@@ -6,6 +6,7 @@ import RegisterForm from "./containers/RegisterForm";
 import Rocks from "./containers/Rocks";
 import Boulder from "./containers/Boulder";
 import Path from "./containers/Path";
+import Requests from "./containers/Requests";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/rocks" exact component={Rocks} />
         <Route path="/rocks/:boulder" exact component={Boulder} />
         <Route path="/path/:path" exact component={Path} />
+        <Route path="/requests" exact component={Requests} />
       </Switch>
     </BrowserRouter>
   );
