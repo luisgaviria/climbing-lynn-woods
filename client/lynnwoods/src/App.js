@@ -7,6 +7,8 @@ import Rocks from "./containers/Rocks";
 import Boulder from "./containers/Boulder";
 import Path from "./containers/Path";
 import Requests from "./containers/Requests";
+import CompletedClimbs from "./containers/CompletedClimbs";
+import MapPage from "./containers/MapPage";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/rocks/:boulder" exact component={Boulder} />
         <Route path="/path/:path" exact component={Path} />
         <Route path="/requests" exact component={Requests} />
+        <Route path="/completed_climbs" exact component={CompletedClimbs} />
+        <Route path="/map" exact component={MapPage} />
       </Switch>
     </BrowserRouter>
   );

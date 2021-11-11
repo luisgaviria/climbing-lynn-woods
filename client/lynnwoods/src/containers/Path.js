@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { url } from "../url";
+import BoulderMap from "../components/BoulderMap";
 
 const Path = (props) => {
   const [state, setState] = useState({
@@ -154,6 +155,9 @@ const Path = (props) => {
             ) : null}
           </div>
         ) : null}
+      </div>
+      <div style={{ width: "500px" }}>
+        <BoulderMap boulder={state} />
       </div>
     </>
   );

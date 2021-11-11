@@ -303,3 +303,36 @@ module.exports.denyRequest = async (req, res, next) => {
   // });
   // const witnesses = completed_boulder.witnesses[temp_index];
 };
+
+module.exports.getCompletedClimbs = async (req, res, next) => {
+  const userId = req.userId;
+  const completed_boulders = await CompletedBoulder.find({
+    climber: userId,
+  })
+    .populate("climber", "username")
+    .populate("boulder");
+
+  for (const [index, completed_boulder] of completed_boulders.entries()) {
+    for (const [index2, witness] of completed_boulder.witnesses.entries()) {
+      const user = await User.findOne({
+        _id: witness.witness,
+      });
+      completed_boulders[index].witnesses[index2].witness = {
+        _id: user._id,
+        username: user.username,
+      };
+    }
+  }
+
+  return res.status(200).json({
+    completedBoulders: completed_boulders,
+  });
+};
+
+module.exports.getAllBoulders = async (req, res, next) => {
+  const boulders = await Boulder.find();
+
+  return res.status(200).json({
+    boulders: boulders,
+  });
+};

@@ -34,4 +34,8 @@ router.delete(
   boulderController.denyRequest
 );
 
+router.get("/completed_climbs", isAuth, boulderController.getCompletedClimbs);
+
+router.get("/boulders", isAuth, boulderController.getAllBoulders);
+
 module.exports = router;
