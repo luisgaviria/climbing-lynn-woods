@@ -2,15 +2,30 @@ import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker,
   InfoWindow,
+  Marker,
 } from "react-google-maps";
 import React from "react";
-import { compose, withProps } from "recompose";
+import { compose, withProps, withStateHandlers } from "recompose";
 import axios from "axios";
 import { url } from "../url";
 
 const Map = compose(
+  withStateHandlers(
+    () => ({
+      isOpen: {},
+    }),
+    {
+      onToggleOpen:
+        ({ isOpen }) =>
+        (index) => ({
+          isOpen: {
+            ...isOpen,
+            [index]: isOpen[index] == undefined ? true : !isOpen[index],
+          },
+        }),
+    }
+  ),
   withProps({
     googleMapURL:
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyBIa95EK04YAEKm3rg3QN0nbxmRpTRIwk4",
@@ -21,8 +36,20 @@ const Map = compose(
   withScriptjs,
   withGoogleMap
 )((props) => {
+  // const mapRef = React.useRef();
+
+  // const onMapLoad = React.useCallback((map) => {
+  //   mapRef.current = map;
+  // }, []);
+
+  const options = {
+    disableDefaultUI: true,
+    zoomControl: true,
+  };
+
   return (
     <GoogleMap
+      options={options}
       defaultZoom={15}
       defaultCenter={{
         lat: 42.47754,
@@ -38,32 +65,31 @@ const Map = compose(
               lng: boulder.longitude,
             }}
             onClick={() => {
-              props.onClickMarker(boulder);
+              console.log(boulder);
+              props.onToggleOpen(index);
+              // setSelected(boulder);
+              // setSelected(boulder);
             }}
-          />
+          >
+            {props.isOpen[index] === true ? (
+              <InfoWindow onCloseClick={() => props.onToggleOpen(index)}>
+                <h1>{props.boulders[index].Boulder}</h1>
+              </InfoWindow>
+            ) : null}
+          </Marker>
         );
       })}
-      {props.info ? (
+      {/* {selected ? (
         <InfoWindow
-          position={{
-            lat: props.info.latitude,
-            lng: props.info.longitude,
+          position={{ lat: selected.latitude, lng: selected.longitude }}
+          onCloseClick={() => {
+            console.log(selected);
+            setSelected(null);
           }}
         >
-          <div>
-            <img
-              style={{ width: "200px", height: "150px" }}
-              src={props.info.photos[0]}
-            />
-            <h4>
-              {props.info.route} {props.info.rating} Stars:{" "}
-              {props.info.avgStars}
-            </h4>
-
-            <h4>{props.info.location}</h4>
-          </div>
+          <div>{selected.route}</div>
         </InfoWindow>
-      ) : null}
+      ) : null} */}
     </GoogleMap>
   );
 });
@@ -73,7 +99,8 @@ class MyFancyComponent extends React.PureComponent {
     super(props);
     this.state = {
       boulders: [],
-      info: null,
+      // info: null,
+      isOpen: {},
     };
   }
 
@@ -88,17 +115,14 @@ class MyFancyComponent extends React.PureComponent {
     this.setState({ boulders: response.data.boulders });
   }
 
-  onClickMarker = (boulder) => {
-    this.setState({ ...this.state, info: boulder });
-  };
-
-  onCloseInfoWindow = () => {
-    this.setState({ ...this.state, info: null });
-  };
+  // onCloseInfoWindow = () => {
+  //   this.setState({ ...this.state, info: null });
+  // };
 
   render() {
     return (
       <Map
+        isMarkerShown
         boulders={this.state.boulders}
         onClickMarker={this.onClickMarker}
         onCloseInfoWindow={this.onCloseInfoWindow}

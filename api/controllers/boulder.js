@@ -332,7 +332,27 @@ module.exports.getCompletedClimbs = async (req, res, next) => {
 module.exports.getAllBoulders = async (req, res, next) => {
   const boulders = await Boulder.find();
 
+  const locations = {};
+
+  for (const boulder of boulders) {
+    try {
+      locations[boulder.location].routes.push(boulder.route);
+    } catch (err) {
+      locations[boulder.location] = {
+        routes: [],
+        latitude: null,
+        longitude: null,
+      };
+    }
+    locations[boulder.location].latitude = boulder.latitude;
+    locations[boulder.location].longitude = boulder.longitude;
+  }
+
+  var result = Object.keys(locations).map((key) => {
+    return { ...locations[key], Boulder: key.split(">")[0].trim() };
+  });
+
   return res.status(200).json({
-    boulders: boulders,
+    boulders: result,
   });
 };
