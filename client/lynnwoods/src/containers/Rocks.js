@@ -27,8 +27,8 @@ const Rocks = () => {
 
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Rocks:</h1>
-      <div className="rocks-grid">
+      <h1 style={{ textAlign: "center" }}>Lynn Woods Climbing:</h1>
+      <div className='rocks-grid'>
         {Object.keys(state.boulders)?.map((key) => {
           return (
             <>

@@ -123,12 +123,12 @@ const Path = (props) => {
             })
           }
         >
-          Submit completion this path
+          Submit problem completion
         </button>
         {state.completion_input ? (
           <div>
             <input
-              placeholder="Username of witness"
+              placeholder='Username of witness'
               value={state.input}
               onChange={handleChange}
             />

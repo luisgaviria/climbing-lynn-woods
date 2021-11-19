@@ -185,7 +185,7 @@ module.exports.completeBoulder = async (req, res, next) => {
   await completed_boulder.save();
 
   return res.status(200).json({
-    message: "Created submission to confirm by witness",
+    message: "Succesfully sent witness request",
   });
 };
 
@@ -199,19 +199,19 @@ module.exports.confirmSubmission = async (req, res, next) => {
 
   if (!completed_boulder) {
     const error = new Error();
-    error.message = "We can't find submission";
+    error.message = "We can't find this submission";
     error.statusCode = 404;
     return next(error);
   }
   if (completed_boulder.witness != null) {
     const error = new Error();
-    error.message = "This submission have witness";
+    error.message = "This submission has a witness already";
     error.statusCode = 403;
     return next(error);
   }
   if (completed_boulder.climber == userId) {
     const error = new Error();
-    error.message = "You can't be witness for your submission";
+    error.message = "You can't be witness for your own submission";
     error.statusCode = 403;
     return next(error);
   }
@@ -220,7 +220,7 @@ module.exports.confirmSubmission = async (req, res, next) => {
   await completed_boulder.save();
 
   return res.status(200).json({
-    message: "Succesfully confirmed submission",
+    message: "Succesfully confirmed your witness",
   });
 };
 
