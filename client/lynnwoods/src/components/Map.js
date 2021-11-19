@@ -1,110 +1,52 @@
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  InfoWindow,
-  Marker,
-} from "react-google-maps";
 import React from "react";
-import { compose, withProps, withStateHandlers } from "recompose";
-import axios from "axios";
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
+
 import { url } from "../url";
 
-const Map = compose(
-  withStateHandlers(
-    () => ({
-      isOpen: {},
-    }),
-    {
-      onToggleOpen:
-        ({ isOpen }) =>
-        (index) => ({
-          isOpen: {
-            ...isOpen,
-            [index]: isOpen[index] == undefined ? true : !isOpen[index],
-          },
-        }),
-    }
-  ),
-  withProps({
-    googleMapURL:
-      "https://maps.googleapis.com/maps/api/js?key=AIzaSyBIa95EK04YAEKm3rg3QN0nbxmRpTRIwk4",
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `480px` }} />,
-    mapElement: <div style={{ height: `100%` }} />,
-  }),
-  withScriptjs,
-  withGoogleMap
-)((props) => {
-  // const mapRef = React.useRef();
+import { useHistory } from "react-router-dom";
 
-  // const onMapLoad = React.useCallback((map) => {
-  //   mapRef.current = map;
-  // }, []);
+import axios from "axios";
 
-  const options = {
-    disableDefaultUI: true,
-    zoomControl: true,
-  };
+import icon from "../images/climbing.svg";
 
-  return (
-    <GoogleMap
-      options={options}
-      defaultZoom={15}
-      defaultCenter={{
-        lat: 42.47754,
-        lng: -70.989036,
-      }}
-    >
-      {props.boulders?.map((boulder, index) => {
-        return (
-          <Marker
-            key={index}
-            position={{
-              lat: boulder.latitude,
-              lng: boulder.longitude,
-            }}
-            onClick={() => {
-              console.log(boulder);
-              props.onToggleOpen(index);
-              // setSelected(boulder);
-              // setSelected(boulder);
-            }}
-          >
-            {props.isOpen[index] === true ? (
-              <InfoWindow onCloseClick={() => props.onToggleOpen(index)}>
-                <h1>{props.boulders[index].Boulder}</h1>
-              </InfoWindow>
-            ) : null}
-          </Marker>
-        );
-      })}
-      {/* {selected ? (
-        <InfoWindow
-          position={{ lat: selected.latitude, lng: selected.longitude }}
-          onCloseClick={() => {
-            console.log(selected);
-            setSelected(null);
-          }}
-        >
-          <div>{selected.route}</div>
-        </InfoWindow>
-      ) : null} */}
-    </GoogleMap>
-  );
-});
+const mapContainerStyle = {
+  width: "100vw",
+  height: "60vh",
+};
 
-class MyFancyComponent extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      boulders: [],
-      // info: null,
-      isOpen: {},
-    };
-  }
+const libraries = ["places"];
 
-  async componentDidMount() {
+const center = {
+  lat: 42.4832054,
+  lng: -70.9828326,
+};
+
+export default function Map() {
+  const history = useHistory();
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyBIa95EK04YAEKm3rg3QN0nbxmRpTRIwk4",
+    libraries,
+  });
+
+  const [markers, setMarkers] = React.useState([]);
+  const [myPosition, setMyPosition] = React.useState(null);
+  const [selected, setSelected] = React.useState(null);
+
+  const mapRef = React.useRef();
+  const onMapLoad = React.useCallback(async (map) => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setMyPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+      console.log("Latitude is: ", position.coords.latitude);
+      console.log("Longitude is: ", position.coords.longitude);
+    });
     const response = await axios.get(url + "/boulders", {
       headers: {
         "Content-Type": "application/json",
@@ -112,24 +54,65 @@ class MyFancyComponent extends React.PureComponent {
       },
     });
 
-    this.setState({ boulders: response.data.boulders });
-  }
+    setMarkers(response.data.boulders);
+    mapRef.current = map;
+    console.log(response.data.boulders);
+  }, []);
+  const onClickRoute = React.useCallback((route) => {
+    history.push(`/path/${route}`);
+  }, []);
 
-  // onCloseInfoWindow = () => {
-  //   this.setState({ ...this.state, info: null });
-  // };
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(10);
+  });
 
-  render() {
-    return (
-      <Map
-        isMarkerShown
-        boulders={this.state.boulders}
-        onClickMarker={this.onClickMarker}
-        onCloseInfoWindow={this.onCloseInfoWindow}
-        info={this.state.info}
-      />
-    );
-  }
+  if (loadError) return "Error loading maps";
+  if (!isLoaded) return "Loading Maps";
+
+  return (
+    <div className="map">
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        zoom={10}
+        center={center}
+        onLoad={onMapLoad}
+      >
+        {markers.map((marker, index) => (
+          <Marker
+            key={index}
+            position={{ lat: marker.latitude, lng: marker.longitude }}
+            onClick={() => {
+              setSelected(marker);
+            }}
+          />
+        ))}
+
+        <Marker key={"position"} position={myPosition} icon={icon} />
+
+        {selected ? (
+          <InfoWindow
+            position={{ lat: selected.latitude, lng: selected.longitude }}
+            onCloseClick={() => {
+              setSelected(null);
+            }}
+          >
+            <div>
+              <h2>{selected.Boulder}</h2>
+              {selected.routes.map((route) => {
+                return (
+                  <p
+                    onClick={() => onClickRoute(route)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {route}
+                  </p>
+                );
+              })}
+            </div>
+          </InfoWindow>
+        ) : null}
+      </GoogleMap>
+    </div>
+  );
 }
-
-export default MyFancyComponent;
