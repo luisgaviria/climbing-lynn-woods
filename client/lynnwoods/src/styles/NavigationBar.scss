@@ -1,0 +1,385 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Open+Sans&display=swap");
+
+.navbar-brand-text {
+  font-family: "Open Sans Condensed", sans-serif;
+  margin-right: 1rem;
+  margin-top: 5px;
+  text-align: center;
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: #312f2f;
+}
+
+.navbar-brand-text nav-link {
+  text-align: center;
+}
+
+.not-container {
+  background: url("https://i.postimg.cc/DygJdcXm/APPS.png") no-repeat center
+    center;
+  text-align: center;
+  width: 100%;
+  height: 60vh;
+  margin-bottom: -1rem;
+  background-size: contain;
+
+  display: flex;
+}
+
+.d-inline-block {
+  margin-top: 0.1rem;
+  height: 10vh;
+}
+
+.log-in-button a {
+  margin-left: 10rem;
+}
+
+.item-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.not-item-container {
+  flex: 1 1 200px; /*  Stretching: */
+  flex: 0 1 200px; /*  No stretching: */
+  margin: 2rem;
+  cursor: pointer;
+}
+
+.not-item-container:hover {
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+}
+
+.product-image {
+  max-width: 300px !important;
+  height: auto;
+  max-height: 44vh;
+
+  object-fit: cover;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.product-title {
+  font-family: "Gowun Dodum", sans-serif;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.details-page-container {
+  /* display: flex;
+  flex-wrap: wrap; */
+  justify-content: center;
+  align-items: center;
+}
+
+.details-picture {
+  width: 100%;
+  height: 60vh; /* Or whatever */
+  margin: auto; /* Magic! */
+}
+
+.details-picture:hover {
+  -webkit-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  transform: scale(1.5);
+}
+
+/* .product-details-image:hover {
+  height: 100vh;
+} */
+
+.details-title {
+  font-family: "Gowun Dodum", sans-serif;
+  font-weight: bolder;
+  margin: 0 auto;
+
+  margin-top: 1em;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.product-description {
+  font-family: "Gowun Dodum", sans-serif;
+  font-family: "Open Sans", sans-serif;
+  margin: 0 auto;
+
+  font-weight: lighter;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.d-grid {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.item-title {
+  width: 100%;
+}
+
+.footer-logo {
+  margin-top: -3rem;
+  height: 10vh;
+}
+
+.color-image:hover {
+  -webkit-transform: scale(1.65);
+  -ms-transform: scale(1.65);
+  transform: scale(1.65);
+}
+
+.about-us-title {
+  font-family: "Gowun Dodum", sans-serif;
+  font-size: 4em;
+  color: rgb(61, 60, 60);
+  margin: 0 auto;
+  margin-top: 1em;
+  text-align: center;
+  font-weight: bolder;
+}
+
+@media (max-width: 26.25em) {
+  .about-us-title {
+    font-size: 3em;
+    text-align: center;
+  }
+}
+
+.about-us-text {
+  font-size: 1.4em;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: rgb(24, 22, 22);
+  text-align: left;
+  margin-bottom: 10pt;
+  margin-top: 10pt;
+  font-weight: 300;
+}
+
+.color-name {
+  font-family: "Gowun Dodum", sans-serif;
+  font-size: x-large;
+}
+
+.button {
+  border-color: #007bff !important;
+}
+
+.how-to-container {
+  margin-bottom: 6rem;
+}
+
+.how-to-image {
+  background: url("https://i.postimg.cc/SstHZ3k9/order-icon-18.png") no-repeat
+    center center;
+  text-align: center;
+  width: 100%;
+  height: 30vh;
+  margin-bottom: 1rem;
+  margin-top: 3.3rem;
+  background-size: contain;
+
+  display: flex;
+}
+
+.footer {
+  background-color: #2d709c;
+  width: 100%;
+  text-align: left;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 50px;
+  margin-top: 1rem;
+  /* position: absolute; */
+  position: relative;
+  /* margin-top: -180px; */
+  /* negative value of footer height */
+
+  clear: both;
+}
+
+.footer .footer-left,
+.footer .footer-center,
+.footer .footer-right {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* footer left*/
+
+.footer .footer-left {
+  width: 33%;
+  padding-right: 15px;
+}
+
+.footer .about {
+  line-height: 20px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.footer .about span {
+  display: block;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.footer .icons {
+  margin-top: 25px;
+}
+
+.footer .icons a {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  background-color: #33383b;
+  border-radius: 2px;
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 35px;
+  margin-right: 3px;
+  margin-bottom: 5px;
+}
+
+/* footer center*/
+
+.footer .footer-center {
+  width: 30%;
+}
+
+.footer .footer-center i {
+  background-color: #33383b;
+  color: #ffffff;
+  font-size: 25px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 42px;
+  margin: 10px 15px;
+  vertical-align: middle;
+}
+
+.footer .footer-center i.fa-envelope {
+  font-size: 17px;
+  line-height: 38px;
+}
+
+.footer .footer-center p {
+  display: inline-block;
+  color: #ffffff;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.footer .footer-center p span {
+  display: block;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.footer .footer-center p a {
+  color: #000000;
+  text-decoration: none;
+  font-size: 14pt;
+}
+
+.footer .footer-center p a:hover {
+  color: rgb(6, 57, 195);
+}
+
+/* footer right*/
+
+.footer .footer-right {
+  width: 35%;
+}
+
+.footer h2 {
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.footer h2 span {
+  color: #0099ff;
+}
+
+.footer .menu {
+  color: #ffffff;
+  margin: 20px 0 12px;
+  padding: 0;
+}
+
+.footer .menu a {
+  display: inline-block;
+  line-height: 1.8;
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer .menu a:hover {
+  color: #0099ff;
+}
+
+.footer .name {
+  color: #032c47;
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    font-size: 14px;
+  }
+  .footer .footer-left,
+  .footer .footer-center,
+  .footer .footer-right {
+    display: block;
+    width: 100%;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .footer .footer-center i {
+    margin-left: 0;
+  }
+}
+
+.categories-container {
+  margin-bottom: 28rem;
+}
+
+.categories-title {
+  font-family: "Source Code Pro", monospace;
+  color: rgb(39, 38, 38);
+  font-size: 3rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  margin-left: 1rem;
+}
+
+.dropdown-button {
+  margin-left: 1rem;
+}
+
+.categories-list-item .active {
+  color: #33383b;
+}
