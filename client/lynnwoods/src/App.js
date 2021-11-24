@@ -9,10 +9,12 @@ import Path from "./containers/Path";
 import Requests from "./containers/Requests";
 import CompletedClimbs from "./containers/CompletedClimbs";
 import MapPage from "./containers/MapPage";
+import NavBar from "./components/NavigationBar";
 
 function App() {
   return (
     <BrowserRouter>
+      <NavBar />
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route path="/googleauth" exact component={GoogleAuth} />

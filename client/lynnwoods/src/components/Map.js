@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -6,13 +6,13 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 
+import MapStyle from "./MapStyle";
+
 import { url } from "../url";
 
 import { useHistory } from "react-router-dom";
 
 import axios from "axios";
-
-import icon from "../images/climbing.svg";
 
 const mapContainerStyle = {
   width: "100vw",
@@ -31,6 +31,19 @@ export default function Map() {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBIa95EK04YAEKm3rg3QN0nbxmRpTRIwk4",
     libraries,
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      navigator.geolocation.getCurrentPosition((position) => {
+        // console.log(position)
+        setMyPosition({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      });
+    }, 2000); // every two seconds
+    return () => clearInterval(interval);
   });
 
   const [markers, setMarkers] = React.useState([]);
@@ -77,6 +90,9 @@ export default function Map() {
         zoom={10}
         center={center}
         onLoad={onMapLoad}
+        options={{
+          styles: MapStyle,
+        }}
       >
         {markers.map((marker, index) => (
           <Marker
@@ -88,7 +104,18 @@ export default function Map() {
           />
         ))}
 
-        <Marker key={"position"} position={myPosition} icon={icon} />
+        {myPosition?.lat ? (
+          <Marker
+            key={"position"}
+            position={myPosition}
+            icon={{
+              url: "https://img.icons8.com/emoji/48/000000/blue-circle-emoji.png",
+              scaledSize: new window.google.maps.Size(30, 30),
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15),
+            }}
+          />
+        ) : null}
 
         {selected ? (
           <InfoWindow
