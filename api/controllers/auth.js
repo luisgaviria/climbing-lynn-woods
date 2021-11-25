@@ -1,5 +1,6 @@
 require("dotenv").config();
 const User = require("../models/user");
+const Admin = require("../models/admin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -67,7 +68,33 @@ module.exports.loginUser = async (req, res, next) => {
     ],
   });
 
-  if (!user) {
+  const admin = await Admin.findOne({
+    login: body.login,
+  });
+
+  if (!user && admin) {
+    // admin login handling here
+    const logged = bcrypt.compareSync(body.password, admin.password);
+    if (logged) {
+      const token = await jwt.sign(
+        {
+          adminId: admin._id.toString(),
+        },
+        process.env.JWT_SECRET_ADMIN,
+        {}
+      );
+      return res.status(200).json({
+        message: "Succesfully logged as an admin",
+        token: token,
+        admin: true,
+      });
+    } else {
+      const error = new Error();
+      error.message = "Your login or password is wrong";
+      error.statusCode = 401;
+      return next(error);
+    }
+  } else if (!user) {
     const error = new Error();
     error.message = "Your login or password is wrong";
     error.statusCode = 401;

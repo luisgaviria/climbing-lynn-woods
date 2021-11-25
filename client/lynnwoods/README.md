@@ -6,4 +6,6 @@ Point system.
 
 Have admin user be able to update lat-lng and points values.
 
-Clean up boulder routes by adding cards displaying each route.
+requests and completed climbs can be see if you log in otherwise you don't see them.
+
+deploy

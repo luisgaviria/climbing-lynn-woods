@@ -28,7 +28,15 @@ const Boulder = (props) => {
   return (
     <>
       <h1 style={{ textAlign: "center" }}>{props.match.params.boulder}</h1>
-      <div style={{ textAlign: "center" }}>
+      <div
+        style={{
+          textAlign: "center",
+          display: "grid",
+          gridGap: "1rem",
+          gridTemplateColumns: "repeat(3,1fr)",
+          marginTop: "50px",
+        }}
+      >
         {state.paths.map((path) => {
           return <PathTile path={path} />;
         })}

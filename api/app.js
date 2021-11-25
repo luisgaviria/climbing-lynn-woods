@@ -8,6 +8,7 @@ require("dotenv").config();
 const boulderRoute = require("./routes/Boulder");
 const authRoute = require("./routes/Auth");
 const usersRoute = require("./routes/Users");
+const adminRoute = require("./routes/Admin");
 
 app.use(bodyParser.json());
 
@@ -44,6 +45,8 @@ app.use("/", boulderRoute);
 app.use("/auth", authRoute);
 
 app.use("/users", usersRoute);
+
+app.use("/admin", adminRoute);
 
 app.use((error, req, res, next) => {
   // console.log(error);
