@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
 import "../styles/Rocks.scss";
+import ListGroup from "react-bootstrap/ListGroup";
 
 const Area = (props) => {
   const history = useHistory();
@@ -9,19 +10,18 @@ const Area = (props) => {
   };
 
   return (
-    <div>
+    <ListGroup>
       {props.area.map((boulder) => {
         return (
-          <div
-            className="area"
+          <ListGroup.Item
             style={{ cursor: "pointer" }}
             onClick={() => onClickBoulder(boulder)}
           >
             {boulder}
-          </div>
+          </ListGroup.Item>
         );
       })}
-    </div>
+    </ListGroup>
   );
 };
 

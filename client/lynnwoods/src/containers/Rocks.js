@@ -32,7 +32,7 @@ const Rocks = () => {
         {Object.keys(state.boulders)?.map((key) => {
           return (
             <>
-              <div>
+              <div className='area'>
                 <h3>{key}</h3>
                 <Area area={state.boulders[key]} />
               </div>

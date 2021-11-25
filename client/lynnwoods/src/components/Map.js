@@ -22,8 +22,8 @@ const mapContainerStyle = {
 const libraries = ["places"];
 
 const center = {
-  lat: 42.4832054,
-  lng: -70.9828326,
+  lat: 42.493851,
+  lng: -70.995081,
 };
 
 export default function Map() {
@@ -84,10 +84,10 @@ export default function Map() {
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <div className="map">
+    <div className='map'>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={10}
+        zoom={13.9}
         center={center}
         onLoad={onMapLoad}
         options={{
@@ -109,7 +109,8 @@ export default function Map() {
             key={"position"}
             position={myPosition}
             icon={{
-              url: "https://img.icons8.com/emoji/48/000000/blue-circle-emoji.png",
+              url:
+                "https://img.icons8.com/emoji/48/000000/blue-circle-emoji.png",
               scaledSize: new window.google.maps.Size(30, 30),
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),

@@ -4,13 +4,13 @@
   // grid-gap: 10px;
   // grid-auto-rows: minmax(100px, auto);
   // align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  height: auto;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 50px;
 }
 
 .area {
-  flex: 1 1 170px; /*  Stretching: */
-  flex: 0 1 170px; /*  No stretching: */
-  margin: 20px;
+  margin-bottom: 4rem;
 }
