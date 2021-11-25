@@ -28,12 +28,12 @@ const NavigationBar = () => {
           <Nav>
             <Nav.Link>
               <Link className='navbar-brand-text' to='/rocks'>
-                Areas
+                Lynn Woods Areas
               </Link>
             </Nav.Link>
             <Nav.Link>
               <Link className='navbar-brand-text' to='/map'>
-                Map
+                Bouldering Map
               </Link>
             </Nav.Link>
             <Nav.Link>
