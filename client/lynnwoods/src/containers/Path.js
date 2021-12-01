@@ -18,7 +18,7 @@ const Path = (props) => {
   });
 
   useEffect(async () => {
-    const response = await axios.get("/path/" + props.match.params.path, {
+    const response = await axios.get(url + "/path/" + props.match.params.path, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -35,7 +35,7 @@ const Path = (props) => {
   }, []);
 
   const getUsers = useCallback(async () => {
-    const response = await axios.get("/users/" + state.input, {
+    const response = await axios.get(url + "/users/" + state.input, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -76,7 +76,7 @@ const Path = (props) => {
   const onClickSubmit = async (req, res, next) => {
     try {
       const response = await axios.post(
-        "api/path/" + state._id.toString() + "/finish",
+        url + "api/path/" + state._id.toString() + "/finish",
         {
           witnessId: state.choosen_user?._id.toString(),
         },
@@ -117,21 +117,21 @@ const Path = (props) => {
 
   return (
     <>
-      <div className='container'>
-        <h6 className='route-location'>{state.location}</h6>
-        <div className='route-name-description'>
+      <div className="container">
+        <h6 className="route-location">{state.location}</h6>
+        <div className="route-name-description">
           <h2>{state.route + " " + state.rating}</h2>
         </div>
         {state.photos?.map((photo) => {
           return (
-            <div className='image-container'>
-              <Image className='grow' src={photo} fluid />
+            <div className="image-container">
+              <Image className="grow" src={photo} fluid />
             </div>
           );
         })}
         <ReactStars {...starExample} />
 
-        <p className='route-description'>
+        <p className="route-description">
           <strong>Description:</strong> {state.description}
         </p>
         <h6>FA: {state.FA}</h6>
@@ -180,7 +180,7 @@ const Path = (props) => {
         ) : null}
       </div>
 
-      <BoulderMap className='path-map' boulder={state} />
+      <BoulderMap className="path-map" boulder={state} />
     </>
   );
 };

@@ -8,7 +8,7 @@ const CompletedClimbs = (props) => {
     completed_climbs: [],
   });
   useEffect(async () => {
-    const response = await axios.get("api/completed_climbs", {
+    const response = await axios.get(url+ "api/completed_climbs", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),

@@ -26,7 +26,7 @@ const RegisterForm = (props) => {
     // console.log(url);
     try {
       const response = await axios.post(
-        `api/auth/register`,
+        url + `api/auth/register`,
         {
           username: state.username,
           email: state.email,
