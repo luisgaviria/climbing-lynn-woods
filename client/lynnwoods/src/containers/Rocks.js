@@ -27,13 +27,13 @@ const Rocks = () => {
 
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Lynn Woods Climbing:</h1>
       <div className='rocks-grid'>
         {Object.keys(state.boulders)?.map((key) => {
           return (
             <>
+              {" "}
               <div className='area'>
-                <h3>{key}</h3>
+                <h3 className='area-name'>{key}</h3>
                 <Area area={state.boulders[key]} />
               </div>
             </>

@@ -1,7 +1,12 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Component } from "react";
+import { render } from "react-dom";
 import axios from "axios";
 import { url } from "../url";
 import BoulderMap from "../components/BoulderMap";
+
+import ReactStars from "react-rating-stars-component";
+import Image from "react-bootstrap/Image";
+import "../styles/Path.scss";
 
 const Path = (props) => {
   const [state, setState] = useState({
@@ -11,6 +16,7 @@ const Path = (props) => {
     completion_input: false,
     message: null,
   });
+
   useEffect(async () => {
     const response = await axios.get(url + "/path/" + props.match.params.path, {
       headers: {
@@ -97,23 +103,40 @@ const Path = (props) => {
     }
   };
 
+  const starExample = {
+    size: 60,
+    isHalf: true,
+    char: "★",
+    count: 4,
+    edit: false,
+    value: state.avgStars,
+    // onChange: (newValue) => {
+    //   console.log(`Example 4: new value is ${newValue}`);
+    // },
+  };
+
   return (
     <>
-      <div style={{ display: "grid", placeItems: "center" }}>
-        <h1>Name: {state.route}</h1>
-        <h1>FA: {state.FA}</h1>
-        <h1>Location: {state.location}</h1>
-        <p>Description: {state.description}</p>
-        <p>Average Stars: {state.avgStars}</p>
-        <p>Rating: {state.rating}</p>
+      <div className='container'>
+        <h6 className='route-location'>{state.location}</h6>
+        <div className='route-name-description'>
+          <h2>{state.route + " " + state.rating}</h2>
+        </div>
         {state.photos?.map((photo) => {
           return (
-            <div style={{ width: "100px", height: "100px", margin: "20px" }}>
-              <img src={photo} />
+            <div className='image-container'>
+              <Image className='grow' src={photo} fluid />
             </div>
           );
         })}
-        <button
+        <ReactStars {...starExample} />
+
+        <p className='route-description'>
+          <strong>Description:</strong> {state.description}
+        </p>
+        <h6>FA: {state.FA}</h6>
+
+        {/* <button
           onClick={() =>
             setState((prevState) => {
               return {
@@ -124,7 +147,7 @@ const Path = (props) => {
           }
         >
           Submit problem completion
-        </button>
+        </button> */}
         {state.completion_input ? (
           <div>
             <input
@@ -156,9 +179,8 @@ const Path = (props) => {
           </div>
         ) : null}
       </div>
-      <div style={{ width: "500px" }}>
-        <BoulderMap boulder={state} />
-      </div>
+
+      <BoulderMap className='path-map' boulder={state} />
     </>
   );
 };

@@ -4,13 +4,27 @@
   // grid-gap: 10px;
   // grid-auto-rows: minmax(100px, auto);
   // align-items: center;
-  height: auto;
+  // height: auto;
+  // display: grid;
+  // grid-gap: 1rem;
+  // grid-template-columns: repeat(3, 1fr);
+  // margin: 50px;
+  justify-content: center;
   display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
-  margin: 50px;
+  padding: 0 10vw;
+  margin-bottom: 4rem;
+
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+
+  gap: 1px;
 }
 
 .area {
   margin-bottom: 4rem;
+}
+
+.area-name {
+  display: grid;
+  place-items: center;
+  margin-top: 2rem;
 }

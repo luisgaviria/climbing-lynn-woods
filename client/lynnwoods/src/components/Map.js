@@ -13,10 +13,11 @@ import { url } from "../url";
 import { useHistory } from "react-router-dom";
 
 import axios from "axios";
+import "../styles/Map.scss";
 
 const mapContainerStyle = {
   width: "100vw",
-  height: "60vh",
+  height: "100vh",
 };
 
 const libraries = ["places"];

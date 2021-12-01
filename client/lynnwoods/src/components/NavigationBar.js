@@ -11,8 +11,8 @@ const NavigationBar = () => {
         className='navbar'
         collapseOnSelect
         expand='md'
-        bg='light'
-        variant='light'
+        bg='dark'
+        variant='dark'
       >
         <Navbar.Brand>
           <a href='/' className='navbar-brand'>
