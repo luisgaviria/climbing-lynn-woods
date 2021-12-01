@@ -8,12 +8,15 @@ const Boulder = (props) => {
     paths: [],
   });
   useEffect(async () => {
-    const response = await axios.get("/rocks/" + props.match.params.boulder, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    });
+    const response = await axios.get(
+      url + "api/rocks/" + props.match.params.boulder,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
 
     setState((prevState) => {
       return {
@@ -27,7 +30,7 @@ const Boulder = (props) => {
       <h1 style={{ textAlign: "center", marginTop: "1rem" }}>
         {props.match.params.boulder}
       </h1>
-      <div className='list-item'>
+      <div className="list-item">
         {state.paths.map((path) => {
           return <PathTile path={path} />;
         })}

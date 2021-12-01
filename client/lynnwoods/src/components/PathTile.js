@@ -24,24 +24,24 @@ const PathTile = (props) => {
 
   return (
     <div
-      className='card'
+      className="card"
       style={{
         cursor: "pointer",
       }}
       onClick={onClickTile}
     >
-      <div className='card-image'>
+      <div className="card-image">
         {props.path.photos[0] ? (
-          <Image className='image-inner' fluid src={props.path.photos[0]} />
+          <Image className="image-inner" fluid src={props.path.photos[0]} />
         ) : (
           <Image
-            className='image-inner'
+            className="image-inner"
             fluid
-            src='http://frmpollet.me/pictures/upload/2019/06/02/20190602122401-695dffd6.png'
+            src="http://frmpollet.me/pictures/upload/2019/06/02/20190602122401-695dffd6.png"
           />
         )}
       </div>
-      <div className='card-body'>
+      <div className="card-body">
         <ReactStars data={props.path.avgStars} {...starExample} />
         <h2>{`${props.path.route} ${props.path.rating}`}</h2>
       </div>

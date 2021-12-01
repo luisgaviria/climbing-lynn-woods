@@ -61,7 +61,7 @@ export default function Map() {
       console.log("Latitude is: ", position.coords.latitude);
       console.log("Longitude is: ", position.coords.longitude);
     });
-    const response = await axios.get("/boulders", {
+    const response = await axios.get("api/boulders", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -73,7 +73,7 @@ export default function Map() {
     console.log(response.data.boulders);
   }, []);
   const onClickRoute = React.useCallback((route) => {
-    history.push(`/path/${route}`);
+    history.push(`api/path/${route}`);
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {

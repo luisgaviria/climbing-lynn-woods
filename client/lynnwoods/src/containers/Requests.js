@@ -7,7 +7,7 @@ const Requests = (props) => {
     requests: [],
   });
   useEffect(async () => {
-    const response = await axios.get("/requests", {
+    const response = await axios.get(url + "/requests", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -22,7 +22,7 @@ const Requests = (props) => {
 
   const onClickConfirm = async (request) => {
     const response = await axios.patch(
-      "/request/" + request._id.toString(),
+      url + "/request/" + request._id.toString(),
       {},
       {
         headers: {
@@ -37,12 +37,15 @@ const Requests = (props) => {
   };
 
   const onClickDeny = async (request) => {
-    const response = await axios.delete("api/request/" + request._id.toString(), {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    });
+    const response = await axios.delete(
+      url + "api/request/" + request._id.toString(),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
 
     setState({ requests: response.data.requests });
     // console.log(response.data)

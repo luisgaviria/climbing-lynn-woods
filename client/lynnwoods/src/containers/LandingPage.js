@@ -25,7 +25,7 @@ const LandingPage = (props) => {
   const onClickLogin = async () => {
     try {
       const response = await axios.post(
-        "/auth/login",
+        url + "api/auth/login",
         {
           login: state.login,
           password: state.password,
