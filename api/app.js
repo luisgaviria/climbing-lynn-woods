@@ -1,7 +1,10 @@
+const express = require("express");
 const app = require("express")();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const path = require("path");
+
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 require("dotenv").config();
 
@@ -27,6 +30,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.static(path.resolve(__dirname, "../client/lynnwoods/build")));
+
 passport.use(
   new GoogleStrategy(
     {
@@ -40,13 +45,19 @@ passport.use(
   )
 );
 
-app.use("/", boulderRoute);
+app.use("/api", boulderRoute);
 
-app.use("/auth", authRoute);
+app.use("/api/auth", authRoute);
 
-app.use("/users", usersRoute);
+app.use("/api/users", usersRoute);
 
-app.use("/admin", adminRoute);
+app.use("/api/admin", adminRoute);
+
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.resolve(__dirname, "../client/lynnwoods/build", "index.html")
+  );
+});
 
 app.use((error, req, res, next) => {
   // console.log(error);
@@ -65,7 +76,7 @@ mongoose
   .then(async (result) => {
     console.log("Succesfully connected");
 
-    app.listen(3000);
+    app.listen(process.env.PORT || 3000);
   })
   .catch((err) => {
     console.log(err);

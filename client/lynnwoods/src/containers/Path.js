@@ -18,7 +18,7 @@ const Path = (props) => {
   });
 
   useEffect(async () => {
-    const response = await axios.get(url + "/path/" + props.match.params.path, {
+    const response = await axios.get("/path/" + props.match.params.path, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -35,7 +35,7 @@ const Path = (props) => {
   }, []);
 
   const getUsers = useCallback(async () => {
-    const response = await axios.get(url + "/users/" + state.input, {
+    const response = await axios.get("/users/" + state.input, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -76,7 +76,7 @@ const Path = (props) => {
   const onClickSubmit = async (req, res, next) => {
     try {
       const response = await axios.post(
-        url + "/path/" + state._id.toString() + "/finish",
+        "/path/" + state._id.toString() + "/finish",
         {
           witnessId: state.choosen_user?._id.toString(),
         },
@@ -151,7 +151,7 @@ const Path = (props) => {
         {state.completion_input ? (
           <div>
             <input
-              placeholder='Username of witness'
+              placeholder="Username of witness"
               value={state.input}
               onChange={handleChange}
             />

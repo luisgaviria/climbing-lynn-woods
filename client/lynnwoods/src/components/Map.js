@@ -8,7 +8,7 @@ import {
 
 import MapStyle from "./MapStyle";
 
-import { url } from "../url";
+import { url } from "../url"; // NEED TO ADD URLS TO THE AXIOS ROUTE THROUGH DEVELOPMENT
 
 import { useHistory } from "react-router-dom";
 
@@ -61,7 +61,7 @@ export default function Map() {
       console.log("Latitude is: ", position.coords.latitude);
       console.log("Longitude is: ", position.coords.longitude);
     });
-    const response = await axios.get(url + "/boulders", {
+    const response = await axios.get("/boulders", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -85,7 +85,7 @@ export default function Map() {
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <div className='map'>
+    <div className="map">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={13.9}
@@ -110,8 +110,7 @@ export default function Map() {
             key={"position"}
             position={myPosition}
             icon={{
-              url:
-                "https://img.icons8.com/emoji/48/000000/blue-circle-emoji.png",
+              url: "https://img.icons8.com/emoji/48/000000/blue-circle-emoji.png",
               scaledSize: new window.google.maps.Size(30, 30),
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),

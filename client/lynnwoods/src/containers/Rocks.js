@@ -10,7 +10,7 @@ const Rocks = () => {
     boulders: {},
   });
   useEffect(async () => {
-    const response = await axios.get(url + "/rocks", {
+    const response = await axios.get("api/rocks", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -27,6 +27,7 @@ const Rocks = () => {
 
   return (
     <>
+<<<<<<< HEAD
       <div className='rocks-grid'>
         {Object.keys(state.boulders)?.map((key) => {
           return (
@@ -34,6 +35,15 @@ const Rocks = () => {
               {" "}
               <div className='area'>
                 <h3 className='area-name'>{key}</h3>
+=======
+      <h1 style={{ textAlign: "center" }}>Lynn Woods Climbing:</h1>
+      <div className="rocks-grid">
+        {Object.keys(state.boulders)?.map((key) => {
+          return (
+            <>
+              <div className="area">
+                <h3>{key}</h3>
+>>>>>>> bf6551f8776b5e325d28a90630004618a9b8dc7e
                 <Area area={state.boulders[key]} />
               </div>
             </>
