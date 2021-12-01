@@ -1,4 +1,7 @@
 import { useHistory } from "react-router-dom";
+import Image from "react-bootstrap/Image";
+import "../styles/Path.scss";
+import ReactStars from "react-rating-stars-component";
 
 const PathTile = (props) => {
   const history = useHistory();
@@ -7,26 +10,41 @@ const PathTile = (props) => {
     history.push(`/path/${props.path.route}`);
   };
 
+  const starExample = {
+    size: 50,
+    isHalf: true,
+    char: "★",
+    count: 4,
+    value: props.path.avgStars,
+    edit: false,
+    // onChange: (newValue) => {
+    //   console.log(`Example 4: new value is ${newValue}`);
+    // },
+  };
+
   return (
     <div
+      className='card'
       style={{
         cursor: "pointer",
-        width: "50%",
-        margin: "auto",
-        border: "1px solid black",
-        borderRadius: "20px",
       }}
       onClick={onClickTile}
     >
-      <h2>{props.path.route}</h2>
-      {props.path.photos[0] ? (
-        <img width={100} height={100} src={props.path.photos[0]} />
-      ) : (
-        <p>No Images</p>
-      )}
-
-      <p>Rating: {props.path.rating}</p>
-      <p>Stars: {props.path.avgStars}</p>
+      <div className='card-image'>
+        {props.path.photos[0] ? (
+          <Image className='image-inner' fluid src={props.path.photos[0]} />
+        ) : (
+          <Image
+            className='image-inner'
+            fluid
+            src='http://frmpollet.me/pictures/upload/2019/06/02/20190602122401-695dffd6.png'
+          />
+        )}
+      </div>
+      <div className='card-body'>
+        <ReactStars data={props.path.avgStars} {...starExample} />
+        <h2>{`${props.path.route} ${props.path.rating}`}</h2>
+      </div>
     </div>
   );
 };

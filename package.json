@@ -17,5 +17,6 @@
   "bugs": {
     "url": "https://github.com/luisgaviria/climbing-lynn-woods/issues"
   },
-  "homepage": "https://github.com/luisgaviria/climbing-lynn-woods#readme"
+  "homepage": "https://github.com/luisgaviria/climbing-lynn-woods#readme",
+  "dependencies": {}
 }

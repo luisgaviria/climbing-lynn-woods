@@ -1,94 +1,137 @@
 export default [
   {
-    featureType: "landscape",
-    elementType: "all",
+    elementType: "geometry",
     stylers: [
       {
-        hue: "#FFA800",
+        hue: "#ff4400",
       },
       {
-        gamma: 1,
+        saturation: -68,
+      },
+      {
+        lightness: -4,
+      },
+      {
+        gamma: 0.72,
       },
     ],
   },
   {
-    featureType: "poi",
-    elementType: "all",
-    stylers: [
-      {
-        hue: "#679714",
-      },
-      {
-        saturation: 33.4,
-      },
-      {
-        lightness: -25.4,
-      },
-      {
-        gamma: 1,
-      },
-    ],
+    featureType: "road",
+    elementType: "labels.icon",
   },
   {
-    featureType: "road.highway",
-    elementType: "all",
+    featureType: "landscape.man_made",
+    elementType: "geometry",
     stylers: [
       {
-        hue: "#53FF00",
+        hue: "#0077ff",
       },
       {
-        saturation: -73,
-      },
-      {
-        lightness: 40,
-      },
-      {
-        gamma: 1,
-      },
-    ],
-  },
-  {
-    featureType: "road.arterial",
-    elementType: "all",
-    stylers: [
-      {
-        hue: "#FBFF00",
-      },
-      {
-        gamma: 1,
-      },
-    ],
-  },
-  {
-    featureType: "road.local",
-    elementType: "all",
-    stylers: [
-      {
-        hue: "#00FFFD",
-      },
-      {
-        lightness: 30,
-      },
-      {
-        gamma: 1,
+        gamma: 3.1,
       },
     ],
   },
   {
     featureType: "water",
-    elementType: "all",
     stylers: [
       {
-        hue: "#00BFFF",
+        hue: "#00ccff",
       },
       {
-        saturation: 6,
+        gamma: 0.44,
       },
       {
-        lightness: 8,
+        saturation: -33,
+      },
+    ],
+  },
+  {
+    featureType: "poi.park",
+    stylers: [
+      {
+        hue: "#44ff00",
       },
       {
-        gamma: 1,
+        saturation: -23,
+      },
+    ],
+  },
+  {
+    featureType: "water",
+    elementType: "labels.text.fill",
+    stylers: [
+      {
+        hue: "#007fff",
+      },
+      {
+        gamma: 0.77,
+      },
+      {
+        saturation: 65,
+      },
+      {
+        lightness: 99,
+      },
+    ],
+  },
+  {
+    featureType: "water",
+    elementType: "labels.text.stroke",
+    stylers: [
+      {
+        gamma: 0.11,
+      },
+      {
+        weight: 5.6,
+      },
+      {
+        saturation: 99,
+      },
+      {
+        hue: "#0091ff",
+      },
+      {
+        lightness: -86,
+      },
+    ],
+  },
+  {
+    featureType: "transit.line",
+    elementType: "geometry",
+    stylers: [
+      {
+        lightness: -48,
+      },
+      {
+        hue: "#ff5e00",
+      },
+      {
+        gamma: 1.2,
+      },
+      {
+        saturation: -23,
+      },
+    ],
+  },
+  {
+    featureType: "transit",
+    elementType: "labels.text.stroke",
+    stylers: [
+      {
+        saturation: -64,
+      },
+      {
+        hue: "#ff9100",
+      },
+      {
+        lightness: 16,
+      },
+      {
+        gamma: 0.47,
+      },
+      {
+        weight: 2.7,
       },
     ],
   },

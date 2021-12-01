@@ -13,10 +13,11 @@ import { url } from "../url"; // NEED TO ADD URLS TO THE AXIOS ROUTE THROUGH DEV
 import { useHistory } from "react-router-dom";
 
 import axios from "axios";
+import "../styles/Map.scss";
 
 const mapContainerStyle = {
   width: "100vw",
-  height: "60vh",
+  height: "100vh",
 };
 
 const libraries = ["places"];
