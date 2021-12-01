@@ -70,7 +70,7 @@ const Path = (props) => {
   const onClickSubmit = async (req, res, next) => {
     try {
       const response = await axios.post(
-        "/path/" + state._id.toString() + "/finish",
+        "api/path/" + state._id.toString() + "/finish",
         {
           witnessId: state.choosen_user?._id.toString(),
         },

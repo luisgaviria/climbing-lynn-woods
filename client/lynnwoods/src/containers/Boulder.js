@@ -8,7 +8,7 @@ const Boulder = (props) => {
     paths: [],
   });
   useEffect(async () => {
-    const response = await axios.get("/rocks/" + props.match.params.boulder, {
+    const response = await axios.get("api/rocks/" + props.match.params.boulder, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
