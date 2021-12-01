@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd api && node app.js",
+    "start": "cd api && npm install && node app.js",
     "api": "cd api && npm start",
     "client": "cd client/lynnwoods && npm start",
     "dev": "concurrently \"npm run api\" \"npm run client\""
