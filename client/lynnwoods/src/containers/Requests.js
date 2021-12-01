@@ -7,7 +7,7 @@ const Requests = (props) => {
     requests: [],
   });
   useEffect(async () => {
-    const response = await axios.get(url + "/requests", {
+    const response = await axios.get(url + "api/requests", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -22,7 +22,7 @@ const Requests = (props) => {
 
   const onClickConfirm = async (request) => {
     const response = await axios.patch(
-      url + "/request/" + request._id.toString(),
+      url + "api/request/" + request._id.toString(),
       {},
       {
         headers: {

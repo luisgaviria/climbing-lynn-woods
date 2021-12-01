@@ -61,7 +61,7 @@ export default function Map() {
       console.log("Latitude is: ", position.coords.latitude);
       console.log("Longitude is: ", position.coords.longitude);
     });
-    const response = await axios.get("api/boulders", {
+    const response = await axios.get(url + "api/boulders", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),

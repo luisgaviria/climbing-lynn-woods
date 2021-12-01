@@ -3,7 +3,7 @@ import { url } from "../url";
 
 const GoogleAuthButton = () => {
   const onClick = async () => {
-    window.location.href = url + "/auth/google";
+    window.location.href = url + "api/auth/google";
   };
 
   return (
