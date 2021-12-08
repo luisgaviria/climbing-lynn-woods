@@ -1,1 +1,1 @@
-export const url = "https://lynnwoods.herokuapp.com/";
+export const url = "http://localhost:3000/";

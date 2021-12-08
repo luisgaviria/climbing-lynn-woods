@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import climber from "../images/climber.png";
 import "../styles/NavigationBar.scss";
@@ -8,7 +9,34 @@ import "../styles/NavigationBar.scss";
 const NavigationBar = () => {
   const [state, setState] = useState({
     toggle: false,
+    logged: false,
   });
+
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+    // const token = JSON.parse(localStorage.getItem("token"));
+    // console.log(token);
+  }, [localStorage.getItem("token")]); // way to fire this function when token in localstorage update
+
+  const isToken = () => {
+    if (state.logged) {
+      return (
+        <Nav.Link
+          onClick={() => {
+            localStorage.removeItem("token");
+            history.push("/");
+          }}
+        >
+          <Link className="navbar-brand-text">Logout</Link>
+        </Nav.Link>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const history = useHistory();
+
   return (
     <header>
       <Navbar
@@ -89,6 +117,7 @@ const NavigationBar = () => {
                 Completed Climbs
               </Link>
             </Nav.Link>
+            {isToken()}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
