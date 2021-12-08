@@ -3,13 +3,6 @@ const authController = require("../controllers/auth");
 const passport = require("passport");
 require("dotenv").config();
 
-// router.get(
-//   "/google",
-//   passport.use(GoogleStrategy, {
-//     scope: ["profile", "email"],
-//   })
-// );
-
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -20,8 +13,8 @@ router.get(
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", {
-    session: false,
+  passport.authenticate("google", (req, res) => {
+    res.redirect("/");
   }),
   authController.loginUserViaGoogle
 );

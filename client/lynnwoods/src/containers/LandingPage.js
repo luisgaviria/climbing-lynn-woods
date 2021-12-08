@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GoogleAuthButton from "../components/GoogleAuthButton";
 import { useHistory } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { url } from "../url";
 import axios from "axios";
+
+import "../styles/LandingPage.scss";
 
 const LandingPage = (props) => {
   const [state, setState] = useState({
@@ -11,6 +13,7 @@ const LandingPage = (props) => {
     password: "",
     error: false,
   });
+
   const history = useHistory();
   const onClickRegister = () => {
     history.push("/register");
@@ -49,32 +52,57 @@ const LandingPage = (props) => {
     }
   };
   return (
-    <Form className="w-50 m-auto border">
+    <Form className='log-in container border'>
+      <br></br>
       <Form.Group
-        className="mb-3 text-center"
-        controlId="exampleForm.ControlInput1"
+        className='mb-3 text-center'
+        controlId='exampleForm.ControlInput1'
       >
         <Form.Label>Login</Form.Label>
         <Form.Control
-          className="w-50 m-auto"
-          type="email"
-          placeholder="email"
+          className='w-50 m-auto'
+          type='email'
+          placeholder='email'
+          value={state.login}
+          name='login'
+          onChange={onChangeInput}
         />
       </Form.Group>
       <Form.Group
-        className="mb-3 text-center"
-        controlId="exampleForm.ControlPassword"
+        className='mb-3 text-center'
+        controlId='exampleForm.ControlPassword'
       >
         <Form.Label>Password</Form.Label>
-        <Form.Control className="w-50 m-auto" type="password" />
+        <Form.Control
+          className='w-50 m-auto'
+          type='password'
+          onChange={onChangeInput}
+          value={state.password}
+          name='password'
+        />
       </Form.Group>
-      <Form.Group className="text-center">
-        <Button variant="primary">Log In</Button>
+      <Form.Group className='text-center'>
+        <Button variant='primary' onClick={onClickLogin}>
+          Log In
+        </Button>
       </Form.Group>
+      <br></br>
+      <div>
+        {state.error ? (
+          <>
+            <p style={{ color: "red" }}>Wrong Password or Login</p>
+          </>
+        ) : null}
+        <GoogleAuthButton />
+        <button style={{ margin: "auto" }} onSubmit={onClickRegister}>
+          Register
+        </button>
+      </div>
     </Form>
+
     // <div style={{ margin: "auto", width: "500px", marginTop: "200px" }}>
 
-    //   {/* <input
+    // <input
     //     placeholder="Login"
     //     onChange={onChangeInput}
     //     value={state.login}
@@ -90,11 +118,13 @@ const LandingPage = (props) => {
     //     style={{ display: "inline-block" }}
     //     type="password"
     //   />
-    //   <br /> */}
+    //   <br />
     //   <button style={{ margin: "auto" }} onClick={onClickLogin}>
     //     Login
-    //   </button>
-    //   {state.error ? (
+    //   </button> /*}
+
+    // <div>
+    // {state.error ? (
     //     <>
     //       <p style={{ color: "red" }}>Wrong Password or Login</p>
     //     </>
