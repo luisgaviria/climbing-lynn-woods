@@ -13,9 +13,7 @@ router.get(
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", (req, res) => {
-    res.redirect("/");
-  }),
+  passport.authenticate("google"),
   authController.loginUserViaGoogle
 );
 

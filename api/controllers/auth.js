@@ -126,6 +126,8 @@ module.exports.loginUser = async (req, res, next) => {
 module.exports.loginUserViaGoogle = async (req, res, next) => {
   // console.log(req.user);
 
+  console.log(req.user);
+
   let user = await User.findOne({
     username: req.user.displayName,
     email: req.user.emails[0].value,

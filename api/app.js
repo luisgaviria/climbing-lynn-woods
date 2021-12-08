@@ -32,12 +32,21 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.resolve(__dirname, "../client/lynnwoods/build")));
 
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/api/auth/google/callback",
+      proxy: true,
     },
     (accessToken, refreshToken, profile, done) => {
       done(null, profile, "Accepted");
