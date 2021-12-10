@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { url } from "../url";
 import axios from "axios";
 import Area from "../components/Area";
@@ -28,13 +27,12 @@ const Rocks = () => {
   return (
     <>
       <div className="rocks-grid">
-        {Object.keys(state.boulders)?.map((key) => {
+        {Object.keys(state.boulders)?.map((key, index) => {
           return (
             <>
               {" "}
               <div className="area">
-                <h3 className="area-name">{key}</h3>
-                <Area area={state.boulders[key]} />
+                <Area area={state.boulders[key]} name={key} />
               </div>
             </>
           );

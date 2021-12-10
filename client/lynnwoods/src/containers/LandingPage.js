@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { url } from "../url";
 import axios from "axios";
+import * as actions from "../store/actions/index";
+import { connect } from "react-redux";
 
 import "../styles/LandingPage.scss";
 
@@ -40,7 +42,8 @@ const LandingPage = (props) => {
           },
         }
       );
-      localStorage.setItem("token", response.data.token);
+      props.setLogged(response.data.token);
+      // localStorage.setItem("token", response.data.token);
       history.push("/rocks");
     } catch (err) {
       return setState((prevState) => {
@@ -52,37 +55,37 @@ const LandingPage = (props) => {
     }
   };
   return (
-    <Form className='log-in container border'>
+    <Form className="log-in container border">
       <br></br>
       <Form.Group
-        className='mb-3 text-center'
-        controlId='exampleForm.ControlInput1'
+        className="mb-3 text-center"
+        controlId="exampleForm.ControlInput1"
       >
         <Form.Label>Login</Form.Label>
         <Form.Control
-          className='w-50 m-auto'
-          type='email'
-          placeholder='email'
+          className="w-50 m-auto"
+          type="email"
+          placeholder="email"
           value={state.login}
-          name='login'
+          name="login"
           onChange={onChangeInput}
         />
       </Form.Group>
       <Form.Group
-        className='mb-3 text-center'
-        controlId='exampleForm.ControlPassword'
+        className="mb-3 text-center"
+        controlId="exampleForm.ControlPassword"
       >
         <Form.Label>Password</Form.Label>
         <Form.Control
-          className='w-50 m-auto'
-          type='password'
+          className="w-50 m-auto"
+          type="password"
           onChange={onChangeInput}
           value={state.password}
-          name='password'
+          name="password"
         />
       </Form.Group>
-      <Form.Group className='text-center'>
-        <Button variant='primary' onClick={onClickLogin}>
+      <Form.Group className="text-center">
+        <Button variant="primary" onClick={onClickLogin}>
           Log In
         </Button>
       </Form.Group>
@@ -137,4 +140,10 @@ const LandingPage = (props) => {
   );
 };
 
-export default LandingPage;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setLogged: (token) => dispatch(actions.setLogged(token)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(LandingPage);

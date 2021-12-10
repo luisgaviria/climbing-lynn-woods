@@ -2,38 +2,17 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import * as actions from "../store/actions/index";
+import { connect } from "react-redux";
 
 import climber from "../images/climber.png";
 import "../styles/NavigationBar.scss";
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
   const [state, setState] = useState({
     toggle: false,
     logged: false,
   });
-
-  useEffect(() => {
-    console.log(localStorage.getItem("token"));
-    // const token = JSON.parse(localStorage.getItem("token"));
-    // console.log(token);
-  }, [localStorage.getItem("token")]); // way to fire this function when token in localstorage update
-
-  const isToken = () => {
-    if (state.logged) {
-      return (
-        <Nav.Link
-          onClick={() => {
-            localStorage.removeItem("token");
-            history.push("/");
-          }}
-        >
-          <Link className="navbar-brand-text">Logout</Link>
-        </Nav.Link>
-      );
-    } else {
-      return null;
-    }
-  };
 
   const history = useHistory();
 
@@ -117,7 +96,17 @@ const NavigationBar = () => {
                 Completed Climbs
               </Link>
             </Nav.Link>
-            {isToken()}
+            {props.logged ? (
+              <Nav.Link
+                onClick={() => {
+                  props.loggedOut();
+                }}
+              >
+                <Link className="navbar-brand-text" to="/">
+                  Logout
+                </Link>
+              </Nav.Link>
+            ) : null}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -125,4 +114,16 @@ const NavigationBar = () => {
   );
 };
 
-export default NavigationBar;
+const mapStateToProps = (state) => {
+  return {
+    logged: state.logged,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loggedOut: () => dispatch(actions.loggedOut()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);

@@ -73,7 +73,7 @@ export default function Map() {
     console.log(response.data.boulders);
   }, []);
   const onClickRoute = React.useCallback((route) => {
-    history.push(`api/path/${route}`);
+    history.push(`/path/${route}`);
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
