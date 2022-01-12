@@ -40,26 +40,27 @@ module.exports.addAdmin = async (req, res, next) => {
 
 module.exports.updatePath = async (req, res, next) => {
   const pathId = req.params.path_id;
-  const body = req.body;
 
-  console.log(body);
+  // const body = req.body;
 
-  try {
-    const updatedPath = await Boulder.updateOne(
-      { _id: pathId },
-      {
-        ...body,
-      }
-    );
+  // console.log(body);
 
-    return res.status(200).json({
-      message: "Succesfully updated path",
-      path: body,
-    });
-  } catch (err) {
-    const error = new Error();
-    error.message = "We can't update path";
-    error.statusCode = 400;
-    return next(error);
-  }
+  // try {
+  //   const updatedPath = await Boulder.updateOne(
+  //     { _id: pathId },
+  //     {
+  //       ...body,
+  //     }
+  //   );
+
+  //   return res.status(200).json({
+  //     message: "Succesfully updated path",
+  //     path: body,
+  //   });
+  // } catch (err) {
+  //   const error = new Error();
+  //   error.message = "We can't update path";
+  //   error.statusCode = 400;
+  //   return next(error);
+  // }
 };

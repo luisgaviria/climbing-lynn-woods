@@ -1,14 +1,16 @@
 import { useEffect, useState, useCallback, Component } from "react";
-import { render } from "react-dom";
 import axios from "axios";
 import { url } from "../url";
 import BoulderMap from "../components/BoulderMap";
+import { connect } from "react-redux";
 
 import ReactStars from "react-rating-stars-component";
 import Image from "react-bootstrap/Image";
 import "../styles/Path.scss";
+import { useHistory } from "react-router-dom";
 
 const Path = (props) => {
+  const history = useHistory();
   const [state, setState] = useState({
     input: "",
     users: [],
@@ -136,6 +138,15 @@ const Path = (props) => {
           <strong>Description:</strong> {state.description}
         </p>
         <h6>FA: {state.FA}</h6>
+        {props.admin ? (
+          <button
+            onClick={() => {
+              history.push("/path/edit/" + props.match.params.path);
+            }}
+          >
+            Edit
+          </button>
+        ) : null}
 
         {/* <button
           onClick={() =>
@@ -186,4 +197,10 @@ const Path = (props) => {
   );
 };
 
-export default Path;
+const mapStateToProps = (state) => {
+  return {
+    admin: state.admin,
+  };
+};
+
+export default connect(mapStateToProps)(Path);

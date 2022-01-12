@@ -21,6 +21,7 @@ const BoulderMap = compose(
   return (
     <GoogleMap
       defaultZoom={18}
+      onClick={props.changeBoulder}
       center={{
         lat: props.boulder.latitude,
         lng: props.boulder.longitude,
@@ -47,28 +48,14 @@ const BoulderMap = compose(
 });
 
 class MyFancyComponent extends React.PureComponent {
-  state = {
-    isMarkerShown: false,
-  };
-
-  componentDidMount() {
-    this.delayedShowMarker();
-  }
-
-  delayedShowMarker = () => {
-    setTimeout(() => {
-      this.setState({ isMarkerShown: true });
-    }, 3000);
-  };
-
-  handleMarkerClick = () => {
-    this.setState({ isMarkerShown: false });
-    this.delayedShowMarker();
-  };
-
   render() {
     console.log(this.props.boulder);
-    return <BoulderMap boulder={this.props.boulder} />;
+    return (
+      <BoulderMap
+        boulder={this.props.boulder}
+        changeBoulder={this.props.changeBoulder}
+      />
+    );
   }
 }
 

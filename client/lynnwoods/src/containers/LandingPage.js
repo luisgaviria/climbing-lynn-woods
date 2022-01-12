@@ -43,6 +43,9 @@ const LandingPage = (props) => {
         }
       );
       props.setLogged(response.data.token);
+      if (response.data.admin) {
+        props.adminLogin();
+      }
       // localStorage.setItem("token", response.data.token);
       history.push("/rocks");
     } catch (err) {
@@ -143,6 +146,7 @@ const LandingPage = (props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setLogged: (token) => dispatch(actions.setLogged(token)),
+    adminLogin: () => dispatch(actions.adminLogin()),
   };
 };
 

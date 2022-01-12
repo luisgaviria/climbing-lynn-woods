@@ -10,6 +10,7 @@ import Requests from "./containers/Requests";
 import CompletedClimbs from "./containers/CompletedClimbs";
 import MapPage from "./containers/MapPage";
 import NavBar from "./components/NavigationBar";
+import EditPath from "./containers/EditPath";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/rocks" exact component={Rocks} />
         <Route path="/rocks/:boulder" exact component={Boulder} />
         <Route path="/path/:path" exact component={Path} />
+        <Route path="/path/edit/:path" exact component={EditPath} />
         <Route path="/requests" exact component={Requests} />
         <Route path="/completed_climbs" exact component={CompletedClimbs} />
         <Route path="/map" exact component={MapPage} />

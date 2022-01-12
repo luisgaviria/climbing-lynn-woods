@@ -1,1 +1,1 @@
-export { setLogged, loggedOut } from "./login";
+export { setLogged, loggedOut, adminLogin } from "./login";

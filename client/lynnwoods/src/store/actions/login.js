@@ -15,3 +15,9 @@ export const loggedOut = () => {
     logged: false,
   };
 };
+
+export const adminLogin = () => {
+  return {
+    type: actionTypes.SET_ADMIN,
+  };
+};
