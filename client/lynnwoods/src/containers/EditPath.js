@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { url } from "../url";
 import ReactStars from "react-rating-stars-component";
@@ -8,6 +9,7 @@ import Image from "react-bootstrap/Image";
 import "../styles/Path.scss";
 
 const EditPath = (props) => {
+  const history = useHistory();
   const [state, setState] = useState({
     okey_location: false,
     okey_route: false,
@@ -33,14 +35,40 @@ const EditPath = (props) => {
     });
   }, []);
 
+  const onSaveButtonClick = async () => {
+    let form_data = new FormData();
+    form_data.append("location", state.location);
+    form_data.append("file", state.uploaded_photo);
+    form_data.append("points", state.points);
+    form_data.append("avgStars", state.avgStars);
+    form_data.append("description", state.description);
+    form_data.append("latitude", state.latitude);
+    form_data.append("longitude", state.longitude);
+
+    try {
+      const { data } = await axios.patch(
+        url + "api/admin/path/" + state._id,
+        form_data,
+        {
+          headers: {
+            "Content-type": "multipart/form-data",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+
+      history.push("/path/" + props.match.params.path);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const onAddPhoto = (event) => {
-    const temp = state.photos;
     console.log(event.target.files[0]);
-    temp.push(event.target.files[0]);
     setState((prevState) => {
       return {
         ...prevState,
-        photos: temp,
+        uploaded_photo: event.target.files[0],
       };
     });
   };
@@ -66,12 +94,21 @@ const EditPath = (props) => {
   };
 
   const handleChange = (event) => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        [event.target.name]: event.target.value,
-      };
-    });
+    if (event.target.name == "longitude" || event.target.name == "latitude") {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          [event.target.name]: parseFloat(event.target.value),
+        };
+      });
+    } else {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          [event.target.name]: event.target.value,
+        };
+      });
+    }
   };
   const lockOrUnlockInput = (event) => {
     setState((prevState) => {
@@ -96,15 +133,7 @@ const EditPath = (props) => {
           {state.okey_location ? "Unlock" : "Lock"}
         </button>
         <div className="route-name-description">
-          <input
-            name="route"
-            value={state.route}
-            onChange={handleChange}
-            disabled={state.okey_route}
-          />
-          <button name="route" onClick={lockOrUnlockInput}>
-            {state.okey_route ? "Unlock" : "Lock"}
-          </button>
+          <h1>{state.route}</h1>
         </div>
         {state.photos?.map((photo) => {
           return (
@@ -121,6 +150,12 @@ const EditPath = (props) => {
           );
         })}
 
+        {state.uploaded_photo ? (
+          <Image
+            className="grow"
+            src={URL.createObjectURL(state.uploaded_photo)}
+          />
+        ) : null}
         <input type="file" onChange={onAddPhoto} />
 
         <p className="route-description">
@@ -166,10 +201,27 @@ const EditPath = (props) => {
         <h6>FA: {state.FA}</h6>
       </div>
 
+      <div style={{ margin: "auto", width: "100px" }}>
+        <button onClick={onSaveButtonClick}>Save Changes</button>
+      </div>
+
+      <input
+        onChange={handleChange}
+        name="latitude"
+        type="number"
+        value={state.latitude}
+      />
+      <input
+        onChange={handleChange}
+        name="longitude"
+        type="number"
+        value={state.longitude}
+      />
+
       <BoulderMap
         className="path-map"
-        boulder={state}
-        changeBoulder={changeBoulder}
+        boulder={{ longitude: state.longitude, latitude: state.latitude }}
+        // changeBoulder={changeBoulder}
       />
     </>
   );

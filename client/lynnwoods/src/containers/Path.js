@@ -118,7 +118,11 @@ const Path = (props) => {
         {state.photos?.map((photo) => {
           return (
             <div className="image-container">
-              <Image className="grow" src={photo} fluid />
+              {photo.search("https") != -1 || photo.search("http") != -1 ? (
+                <Image className="grow" src={photo} fluid />
+              ) : (
+                <Image className="grow" src={url + photo} fluid />
+              )}
             </div>
           );
         })}

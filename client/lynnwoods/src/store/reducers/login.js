@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   logged: localStorage.getItem("token") ? true : false,
-  admin: false,
+  admin: localStorage.getItem("admin") ? true : false,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {

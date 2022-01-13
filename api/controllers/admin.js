@@ -40,27 +40,37 @@ module.exports.addAdmin = async (req, res, next) => {
 
 module.exports.updatePath = async (req, res, next) => {
   const pathId = req.params.path_id;
+  const boulder = await Boulder.findOne({
+    _id: pathId,
+  });
 
-  // const body = req.body;
+  const photo = req.files.file;
 
-  // console.log(body);
+  if (photo) {
+    await photo.mv("./data/photos/" + photo.name);
+  }
 
-  // try {
-  //   const updatedPath = await Boulder.updateOne(
-  //     { _id: pathId },
-  //     {
-  //       ...body,
-  //     }
-  //   );
+  if (!boulder) {
+    const error = new Error();
+    error.message = "We can't update path";
+    error.statusCode = 400;
+    return next(error);
+  }
 
-  //   return res.status(200).json({
-  //     message: "Succesfully updated path",
-  //     path: body,
-  //   });
-  // } catch (err) {
-  //   const error = new Error();
-  //   error.message = "We can't update path";
-  //   error.statusCode = 400;
-  //   return next(error);
-  // }
+  const body = req.body;
+
+  boulder.location = body.location;
+  boulder.points = body.points;
+  boulder.avgStars = body.avgStars;
+  boulder.description = body.description;
+  boulder.latitude = body.latitude;
+  boulder.longitude = body.longitude;
+
+  boulder.photos.push("/photos/" + photo.name);
+
+  await boulder.save();
+
+  return res.status(200).json({
+    message: "Succesfully edited path",
+  });
 };

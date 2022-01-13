@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const path = require("path");
+const fileUpload = require("express-fileupload");
+const { translateRating } = require("./utils/translateRating");
 
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 require("dotenv").config();
@@ -13,8 +15,14 @@ const authRoute = require("./routes/Auth");
 const usersRoute = require("./routes/Users");
 const adminRoute = require("./routes/Admin");
 
-app.use(bodyParser.json());
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
 
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use((req, res, next) => {
   //cors policy
@@ -54,6 +62,8 @@ passport.use(
   )
 );
 
+app.use(express.static(path.resolve(__dirname, "data")));
+
 app.use("/api", boulderRoute);
 
 app.use("/api/auth", authRoute);
@@ -62,7 +72,7 @@ app.use("/api/users", usersRoute);
 
 app.use("/api/admin", adminRoute);
 
-app.get("*", (req, res) => {
+app.get("/client", (req, res) => {
   res.sendFile(
     path.resolve(__dirname, "../client/lynnwoods/build", "index.html")
   );
@@ -84,6 +94,7 @@ mongoose
   })
   .then(async (result) => {
     console.log("Succesfully connected");
+    translateRating();
 
     app.listen(process.env.PORT || 3000);
   })

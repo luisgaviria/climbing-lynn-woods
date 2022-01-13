@@ -10,6 +10,7 @@ export const setLogged = (token) => {
 
 export const loggedOut = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("admin");
   return {
     type: actionTypes.LOGGED_OUT,
     logged: false,
@@ -17,6 +18,7 @@ export const loggedOut = () => {
 };
 
 export const adminLogin = () => {
+  localStorage.setItem("admin", true);
   return {
     type: actionTypes.SET_ADMIN,
   };
