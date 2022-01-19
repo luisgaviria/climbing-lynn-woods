@@ -7,4 +7,12 @@ router.post("/add", isAdmin, adminController.addAdmin);
 
 router.patch("/path/:path_id", isAdmin, adminController.updatePath);
 
+router.get("/climbers", isAdmin, adminController.getClimbers);
+
+router.get(
+  "/completedClimbs/:climberId",
+  isAdmin,
+  adminController.getCompletedClimbsForExactUser
+);
+
 module.exports = router;

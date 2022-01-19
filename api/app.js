@@ -94,7 +94,7 @@ mongoose
   })
   .then(async (result) => {
     console.log("Succesfully connected");
-    translateRating();
+    // translateRating();
 
     app.listen(process.env.PORT || 3000);
   })

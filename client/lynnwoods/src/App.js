@@ -11,6 +11,8 @@ import CompletedClimbs from "./containers/CompletedClimbs";
 import MapPage from "./containers/MapPage";
 import NavBar from "./components/NavigationBar";
 import EditPath from "./containers/EditPath";
+import AdminLeaderboard from "./containers/AdminLeaderboard";
+import AdminSingleUserCompletedClimbs from "./containers/AdminSingleUserCompletedClimbs";
 
 function App() {
   return (
@@ -27,6 +29,12 @@ function App() {
         <Route path="/requests" exact component={Requests} />
         <Route path="/completed_climbs" exact component={CompletedClimbs} />
         <Route path="/map" exact component={MapPage} />
+        <Route path="/admin/leaderboard" exact component={AdminLeaderboard} />
+        <Route
+          path="/admin/completed_climbs/:climberId"
+          exact
+          component={AdminSingleUserCompletedClimbs}
+        />
       </Switch>
     </BrowserRouter>
   );

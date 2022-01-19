@@ -17,8 +17,8 @@ module.exports.translateRating = async () => {
         } else if (number[0] == "0") {
           points = 50;
         }
-        console.log(number.input);
-        console.log(points);
+        boulder.points = points;
+        await boulder.save();
       }
     }
   }

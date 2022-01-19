@@ -15,7 +15,7 @@ module.exports.isAdmin = (req, res, next) => {
     decodeToken = jwt.verify(token, process.env.JWT_SECRET_ADMIN);
   } catch (err) {
     err.statusCode = 500;
-    throw error;
+    throw err;
   }
   if (!decodeToken) {
     const error = new Error();

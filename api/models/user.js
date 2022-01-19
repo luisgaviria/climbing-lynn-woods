@@ -13,6 +13,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  gender: {
+    type: String,
+    required: true,
+    enum: ["Male", "Female"],
+  },
+  category: {
+    type: String,
+    required: true,
+    enum: ["Beginner", "Intermediate", "Advance"],
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

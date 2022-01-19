@@ -8,6 +8,8 @@ const RegisterForm = (props) => {
     username: "",
     email: "",
     password: "",
+    gender: "",
+    category: "",
     error: false,
   });
 
@@ -31,6 +33,8 @@ const RegisterForm = (props) => {
           username: state.username,
           email: state.email,
           password: state.password,
+          gender: state.gender,
+          category: state.category,
         },
         {
           headers: {
@@ -77,6 +81,21 @@ const RegisterForm = (props) => {
           value={state.password}
           onChange={onChangeInput}
         />
+      </div>
+      <div>
+        <label>Gender: </label>
+        <select name="gender" onChange={onChangeInput} value={state.gender}>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+      </div>
+      <div>
+        <label>Category: </label>
+        <select name="category" onChange={onChangeInput} value={state.category}>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advance</option>
+        </select>
       </div>
       <button onClick={onClickSignIn}>Sign In</button>
       {state.error ? (
