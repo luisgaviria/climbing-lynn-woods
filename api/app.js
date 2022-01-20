@@ -14,6 +14,7 @@ const boulderRoute = require("./routes/Boulder");
 const authRoute = require("./routes/Auth");
 const usersRoute = require("./routes/Users");
 const adminRoute = require("./routes/Admin");
+const profileRoute = require("./routes/Profile");
 
 app.use(
   fileUpload({
@@ -71,6 +72,8 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 
 app.use("/api/admin", adminRoute);
+
+app.use("/api/profile", profileRoute);
 
 app.get("/client", (req, res) => {
   res.sendFile(

@@ -13,6 +13,8 @@ import NavBar from "./components/NavigationBar";
 import EditPath from "./containers/EditPath";
 import AdminLeaderboard from "./containers/AdminLeaderboard";
 import AdminSingleUserCompletedClimbs from "./containers/AdminSingleUserCompletedClimbs";
+import MyProfile from "./containers/MyProfile";
+import EditMyProfile from "./containers/EditMyProfile";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
           exact
           component={AdminSingleUserCompletedClimbs}
         />
+        <Route path="/myprofile" exact component={MyProfile} />
+        <Route path="/myprofile/edit" exact component={EditMyProfile} />
       </Switch>
     </BrowserRouter>
   );

@@ -156,6 +156,8 @@ module.exports.loginUserViaGoogle = async (req, res, next) => {
       username: req.user.displayName,
       email: req.user.emails[0].value,
       password: "Google",
+      gender: null,
+      category: null,
     });
     const token = await jwt.sign(
       {

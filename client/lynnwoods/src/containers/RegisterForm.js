@@ -8,9 +8,10 @@ const RegisterForm = (props) => {
     username: "",
     email: "",
     password: "",
-    gender: "",
-    category: "",
+    gender: null,
+    category: null,
     error: false,
+    competitor: false,
   });
 
   const history = useHistory();
@@ -22,6 +23,28 @@ const RegisterForm = (props) => {
         [event.target.name]: event.target.value,
       };
     });
+  };
+
+  const onChangeCompetitorOrNot = (event) => {
+    if (event.target.name == "Competitor") {
+      setState((prevState) => {
+        {
+          return {
+            ...prevState,
+            competitor: true,
+          };
+        }
+      });
+    } else if (event.target.name == "Not Competitor") {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          competitor: false,
+          gender: null,
+          category: null,
+        };
+      });
+    }
   };
 
   const onClickSignIn = async () => {
@@ -82,21 +105,46 @@ const RegisterForm = (props) => {
           onChange={onChangeInput}
         />
       </div>
-      <div>
-        <label>Gender: </label>
-        <select name="gender" onChange={onChangeInput} value={state.gender}>
-          <option>Male</option>
-          <option>Female</option>
-        </select>
+      <div onChange={onChangeCompetitorOrNot}>
+        <input
+          type="radio"
+          value="Competitor"
+          name="Competitor"
+          checked={state.competitor ? true : false}
+        />{" "}
+        Competitor{" "}
+        <input
+          type="radio"
+          value="Not Competitor"
+          name="Not Competitor"
+          checked={state.competitor ? false : true}
+        />{" "}
+        Not Competitor
       </div>
-      <div>
-        <label>Category: </label>
-        <select name="category" onChange={onChangeInput} value={state.category}>
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Advance</option>
-        </select>
-      </div>
+      {state.competitor ? (
+        <>
+          <div>
+            <label>Gender: </label>
+            <select name="gender" onChange={onChangeInput} value={state.gender}>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+          <div>
+            <label>Category: </label>
+            <select
+              name="category"
+              onChange={onChangeInput}
+              value={state.category}
+            >
+              <option>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advance</option>
+            </select>
+          </div>
+        </>
+      ) : null}
+
       <button onClick={onClickSignIn}>Sign In</button>
       {state.error ? (
         <>

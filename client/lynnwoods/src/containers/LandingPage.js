@@ -100,7 +100,7 @@ const LandingPage = (props) => {
           </>
         ) : null}
         <GoogleAuthButton />
-        <button style={{ margin: "auto" }} onSubmit={onClickRegister}>
+        <button style={{ margin: "auto" }} onClick={onClickRegister}>
           Register
         </button>
       </div>

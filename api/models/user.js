@@ -15,13 +15,13 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    required: true,
-    enum: ["Male", "Female"],
+    // required: true,
+    enum: ["Male", "Female", null],
   },
   category: {
     type: String,
-    required: true,
-    enum: ["Beginner", "Intermediate", "Advance"],
+    // required: true,
+    enum: ["Beginner", "Intermediate", "Advance", null], // null => not competitor
   },
 });
 

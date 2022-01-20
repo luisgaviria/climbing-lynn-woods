@@ -104,15 +104,22 @@ const NavigationBar = (props) => {
               </Nav.Link>
             ) : null}
             {props.logged ? (
-              <Nav.Link
-                onClick={() => {
-                  props.loggedOut();
-                }}
-              >
-                <Link className="navbar-brand-text" to="/">
-                  Logout
-                </Link>
-              </Nav.Link>
+              <>
+                <Nav.Link>
+                  <Link className="navbar-brand-text" to="/myprofile">
+                    My Profile
+                  </Link>
+                </Nav.Link>
+                <Nav.Link
+                  onClick={() => {
+                    props.loggedOut();
+                  }}
+                >
+                  <Link className="navbar-brand-text-logout" to="/">
+                    Logout
+                  </Link>
+                </Nav.Link>
+              </>
             ) : null}
           </Nav>
         </Navbar.Collapse>
