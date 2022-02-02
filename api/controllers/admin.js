@@ -77,6 +77,7 @@ module.exports.updatePath = async (req, res, next) => {
 };
 
 module.exports.getClimbers = async (req, res, next) => {
+  const category = req.query.category;
   const completedBoulders = await CompletedBoulders.find().populate(
     "boulder climber"
   );
@@ -84,11 +85,13 @@ module.exports.getClimbers = async (req, res, next) => {
   const response = {};
 
   for (const completedBoulder of completedBoulders) {
-    response[completedBoulder.climber._id.toString()] = {
-      username: completedBoulder.climber.username,
-      points: 0,
-      completed_boulders: [],
-    };
+    if (completedBoulder.climber.category == category) {
+      response[completedBoulder.climber?._id.toString()] = {
+        username: completedBoulder.climber?.username,
+        points: 0,
+        completed_boulders: [],
+      };
+    }
   }
 
   for (const completedBoulder of completedBoulders) {
@@ -99,11 +102,13 @@ module.exports.getClimbers = async (req, res, next) => {
       }
     });
     if (temp) {
-      response[completedBoulder.climber._id.toString()].points +=
-        completedBoulder.boulder.points;
-      response[completedBoulder.climber._id.toString()].completed_boulders.push(
-        completedBoulder.boulder
-      );
+      if (completedBoulder.climber.category == category) {
+        response[completedBoulder.climber._id.toString()].points +=
+          completedBoulder.boulder.points;
+        response[
+          completedBoulder.climber._id.toString()
+        ].completed_boulders.push(completedBoulder.boulder);
+      }
     }
   }
 

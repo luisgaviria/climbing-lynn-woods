@@ -30,8 +30,12 @@ const MyProfile = () => {
       <div style={{ margin: "auto", textAlign: "center" }}>
         <h1>My Profile</h1>
         <h1>Image</h1>
+        <img
+          src={url + state.climber.image}
+          style={{ width: "200px", height: "200px" }}
+        />
         <h1>BIO</h1>
-
+        <div>{state.climber.bio}</div>
         <div>
           <p>Gender: {state.climber.gender}</p>
           <p>Category: {state.climber.category}</p>

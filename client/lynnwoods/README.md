@@ -2,16 +2,12 @@
 
 react select to do cool dropdown// for now not required
 
-Point system.
-
-Have admin user be able to update lat-lng and points values.
-
 requests and completed climbs can be see if you log in otherwise you don't see them.
-
-deploy
 
 REMEMBER WHEN YOU DEPLOY CHANGE URLS IN URL.JS FRONTEND AND .ENV ON API
 
-ADD SAVING THROUGH API
+TopBar after login not showing everything for admin
 
-Finish translateRating
+activate button for completing boulders when admin click button
+
+all_categories in leaderboard sorted by the most completed climbs

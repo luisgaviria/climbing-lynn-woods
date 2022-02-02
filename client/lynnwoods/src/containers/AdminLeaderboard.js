@@ -5,16 +5,22 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const AdminLeaderboard = () => {
-  const [state, setState] = useState([]);
+  const [state, setState] = useState({
+    leaderboard: [],
+    category: "Beginner",
+  });
   const history = useHistory();
 
   useEffect(async () => {
-    const response = await axios.get(url + "api/admin/climbers", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    });
+    const response = await axios.get(
+      url + "api/admin/climbers?category=" + state.category,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
 
     const data = [];
     const keys = Object.keys(response.data.response);
@@ -25,11 +31,31 @@ const AdminLeaderboard = () => {
       });
     });
 
-    setState(data);
-  }, []);
+    setState((prevState) => {
+      return { ...prevState, leaderboard: data };
+    });
+  }, [state.category]);
+
+  const onChangeCategory = (event) => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        category: event.target.value,
+      };
+    });
+  };
 
   return (
     <>
+      <select
+        name="category"
+        onChange={onChangeCategory}
+        value={state.category}
+      >
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Advance</option>
+      </select>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -42,7 +68,7 @@ const AdminLeaderboard = () => {
           </tr>
         </thead>
         <tbody>
-          {state.map((climber, index) => {
+          {state.leaderboard.map((climber, index) => {
             return (
               <tr>
                 <td>{index + 1}</td>

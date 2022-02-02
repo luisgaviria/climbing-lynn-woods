@@ -152,7 +152,7 @@ const Path = (props) => {
           </button>
         ) : null}
 
-        {/* <button
+        <button
           onClick={() =>
             setState((prevState) => {
               return {
@@ -163,7 +163,7 @@ const Path = (props) => {
           }
         >
           Submit problem completion
-        </button> */}
+        </button>
         {state.completion_input ? (
           <div>
             <input

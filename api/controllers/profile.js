@@ -16,6 +16,8 @@ module.exports.getInfoAboutMyProfile = async (req, res, next) => {
       id: user._id,
       gender: user.gender,
       category: user.category,
+      bio: user.bio,
+      image: user.image,
       points: 0,
     },
     completed_boulders: [],
@@ -44,10 +46,22 @@ module.exports.editProfile = async (req, res, next) => {
     _id: userId,
   });
 
+  const photo = req.files?.file;
+
+  if (photo) {
+    let url =
+      "./data/user_photos/" +
+      user.username +
+      "." +
+      photo.mimetype.split("/")[1];
+    await photo.mv(url);
+    user.image = url.split("./data")[1];
+  }
+
   user.gender = body.gender;
   user.category = body.category;
+  user.bio = body.bio;
   await user.save();
-
   return res.status(200).json({
     message: "Succesfully edited profile",
   });

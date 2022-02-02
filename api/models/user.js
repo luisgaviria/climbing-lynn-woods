@@ -13,6 +13,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+    default: "",
+    // required: true,
+  },
+  bio: {
+    type: String,
+    default: "",
+    // required: true,
+  },
   gender: {
     type: String,
     // required: true,
