@@ -7,7 +7,7 @@ import axios from "axios";
 const AdminLeaderboard = () => {
   const [state, setState] = useState({
     leaderboard: [],
-    category: "Beginner",
+    category: "all_categories",
   });
   const history = useHistory();
 
@@ -37,12 +37,23 @@ const AdminLeaderboard = () => {
   }, [state.category]);
 
   const onChangeCategory = (event) => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        category: event.target.value,
-      };
-    });
+    if (event.target.value == "All Categories"){
+      setState(prevState=>{
+        return {
+          ...prevState,
+          category: "all_categories"
+        }
+      });
+    }
+    else {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          category: event.target.value,
+        };
+      });
+    }
+ 
   };
 
   return (
@@ -52,6 +63,7 @@ const AdminLeaderboard = () => {
         onChange={onChangeCategory}
         value={state.category}
       >
+        <option>All Categories</option>
         <option>Beginner</option>
         <option>Intermediate</option>
         <option>Advance</option>

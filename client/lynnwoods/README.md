@@ -10,4 +10,4 @@ TopBar after login not showing everything for admin
 
 activate button for completing boulders when admin click button
 
-all_categories in leaderboard sorted by the most completed climbs
+separate completed boulder according to event

@@ -15,4 +15,10 @@ router.get(
   adminController.getCompletedClimbsForExactUser
 );
 
+router.get("/event", isAdmin, adminController.getEvent);
+
+router.patch("/event/activate", isAdmin, adminController.activateEvent);
+
+router.patch("/event/deactivate", isAdmin, adminController.deactivateEvent);
+
 module.exports = router;

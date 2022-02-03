@@ -151,19 +151,21 @@ const Path = (props) => {
             Edit
           </button>
         ) : null}
+        {state?.event?.active ? (
+          <button
+            onClick={() =>
+              setState((prevState) => {
+                return {
+                  ...prevState,
+                  completion_input: true,
+                };
+              })
+            }
+          >
+            Submit problem completion
+          </button>
+        ) : null}
 
-        <button
-          onClick={() =>
-            setState((prevState) => {
-              return {
-                ...prevState,
-                completion_input: true,
-              };
-            })
-          }
-        >
-          Submit problem completion
-        </button>
         {state.completion_input ? (
           <div>
             <input

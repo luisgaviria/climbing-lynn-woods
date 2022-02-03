@@ -2,6 +2,7 @@ require("dotenv").config();
 const Admin = require("../models/admin");
 const Boulder = require("../models/boulder");
 const CompletedBoulders = require("../models/completed_boulders");
+const Event = require("../models/event");
 const bcrypt = require("bcrypt");
 
 module.exports.addAdmin = async (req, res, next) => {
@@ -85,7 +86,13 @@ module.exports.getClimbers = async (req, res, next) => {
   const response = {};
 
   for (const completedBoulder of completedBoulders) {
-    if (completedBoulder.climber.category == category) {
+    if (category == "all_categories") {
+      response[completedBoulder.climber?._id.toString()] = {
+        username: completedBoulder.climber?.username,
+        points: 0,
+        completed_boulders: [],
+      };
+    } else if (completedBoulder.climber.category == category) {
       response[completedBoulder.climber?._id.toString()] = {
         username: completedBoulder.climber?.username,
         points: 0,
@@ -102,7 +109,13 @@ module.exports.getClimbers = async (req, res, next) => {
       }
     });
     if (temp) {
-      if (completedBoulder.climber.category == category) {
+      if (category == "all_categories") {
+        response[completedBoulder.climber._id.toString()].points +=
+          completedBoulder.boulder.points;
+        response[
+          completedBoulder.climber._id.toString()
+        ].completed_boulders.push(completedBoulder.boulder);
+      } else if (completedBoulder.climber.category == category) {
         response[completedBoulder.climber._id.toString()].points +=
           completedBoulder.boulder.points;
         response[
@@ -146,5 +159,44 @@ module.exports.getCompletedClimbsForExactUser = async (req, res, next) => {
   }
   return res.status(200).json({
     response: response,
+  });
+};
+
+module.exports.getEvent = async (req, res, next) => {
+  const event = (
+    await Event.find({ active: true }).sort({ number: -1 }).limit(1)
+  )[0];
+  return res.status(200).json({
+    event: event,
+  });
+};
+
+module.exports.activateEvent = async (req, res, next) => {
+  const activated_events = await Event.find({ active: true });
+  if (activated_events.length) {
+    return res.status(400).json({
+      message: "You already have activated event",
+    });
+  }
+  const event = (await Event.find().sort({ number: -1 }).limit(1))[0];
+
+  console.log(event);
+
+  const newEvent = await Event.create({
+    number: event.number + 1,
+    active: true,
+  });
+  await newEvent.save();
+  return res.status(200).json({
+    message: `New Event ${newEvent.number} is Activated`,
+  });
+};
+
+module.exports.deactivateEvent = async (req, res, next) => {
+  const event = (await Event.find().sort({ number: -1 }).limit(1))[0];
+  event.active = false;
+  await event.save();
+  return res.status(200).json({
+    message: "Event is Deactivated",
   });
 };

@@ -5,6 +5,7 @@ const fs = require("fs");
 const csv = require("csv-parser");
 const axios = require("axios");
 const cheerio = require("cheerio");
+const { getActualEvent } = require("../utils/getActualEvent");
 
 module.exports.AddBouldersFromFile = (req, res, next) => {
   // const results = [];
@@ -120,7 +121,9 @@ module.exports.getBoulderAndPaths = async (req, res, next) => {
 module.exports.getPath = async (req, res, next) => {
   const path = req.params.path;
 
-  const boulder_path = await Boulder.findOne({ route: path });
+  const event = await getActualEvent();
+
+  const boulder_path = await Boulder.findOne({ route: path }).lean();
 
   const submissions = await CompletedBoulder.find({
     boulder: boulder_path._id,
@@ -131,7 +134,7 @@ module.exports.getPath = async (req, res, next) => {
 
   return res.status(200).json({
     message: `Succesfully got ${path}`,
-    path: boulder_path,
+    path: { ...boulder_path, event: event },
     submissions: submissions,
   });
 };

@@ -15,6 +15,7 @@ import AdminLeaderboard from "./containers/AdminLeaderboard";
 import AdminSingleUserCompletedClimbs from "./containers/AdminSingleUserCompletedClimbs";
 import MyProfile from "./containers/MyProfile";
 import EditMyProfile from "./containers/EditMyProfile";
+import AdminEvent from "./containers/AdminEvent";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         />
         <Route path="/myprofile" exact component={MyProfile} />
         <Route path="/myprofile/edit" exact component={EditMyProfile} />
+        <Route path="/admin/event" exact component={AdminEvent} />
       </Switch>
     </BrowserRouter>
   );

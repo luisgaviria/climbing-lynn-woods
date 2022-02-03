@@ -29,7 +29,6 @@ const AdminSingleUserCompletedClimbs = (props) => {
   return (
     <>
       <div style={{ textAlign: "center" }}>
-        <h1>{state.climber.id}</h1>
         <h1>{state.climber.username}</h1>
         <h1>Points: {state.climber.points}</h1>
       </div>
