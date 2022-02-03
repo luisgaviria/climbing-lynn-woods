@@ -97,11 +97,18 @@ const NavigationBar = (props) => {
               </Link>
             </Nav.Link>
             {localStorage.getItem("admin") ? (
-              <Nav.Link>
-                <Link className="navbar-brand-text" to="/admin/leaderboard">
-                  Leaderboard
-                </Link>
-              </Nav.Link>
+              <>
+                <Nav.Link>
+                  <Link className="navbar-brand-text" to="/admin/leaderboard">
+                    Leaderboard
+                  </Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link className="navbar-brand-text" to="/admin/event">
+                    Event
+                  </Link>
+                </Nav.Link>
+              </>
             ) : null}
             {props.logged ? (
               <>
